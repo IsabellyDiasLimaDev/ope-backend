@@ -1,13 +1,9 @@
 package br.com.giorni.gerenciadororcamento.model;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import javax.persistence.*;
 
 @Entity
-@Data
-@RequiredArgsConstructor
+@Table(name = "tb_prestante")
 public class Prestante {
 
     @Id
