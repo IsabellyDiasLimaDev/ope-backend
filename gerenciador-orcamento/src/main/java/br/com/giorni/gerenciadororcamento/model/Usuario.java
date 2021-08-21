@@ -11,7 +11,6 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
-    private String email;
     private String senha;
 
     public Long getId() {
@@ -30,14 +29,6 @@ public class Usuario {
         this.login = login;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getSenha() {
         return senha;
     }
@@ -51,12 +42,12 @@ public class Usuario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(id, usuario.id) && Objects.equals(login, usuario.login) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha);
+        return Objects.equals(id, usuario.id) && Objects.equals(login, usuario.login)  && Objects.equals(senha, usuario.senha);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, email, senha);
+        return Objects.hash(id, login, senha);
     }
 
     @Override
@@ -64,7 +55,6 @@ public class Usuario {
         return "Usuario{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
-                ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
                 '}';
     }
