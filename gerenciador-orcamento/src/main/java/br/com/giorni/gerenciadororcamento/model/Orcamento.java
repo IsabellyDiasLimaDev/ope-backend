@@ -1,6 +1,8 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,13 +18,21 @@ public class Orcamento {
     @Column(name = "valor_total")
     private String valorTotal;
 
-    @OneToMany
-    private Set<EnderecoOrcamento> enderecoOrcamentos;
-    @OneToMany
-    Set<ServicoOrcamento> servicoOrcamento;
+    @ManyToMany(mappedBy = "orcamentos")
+    private List<Endereco> enderecos;
+    @ManyToMany(mappedBy = "orcamentos")
+    private List<Servico> servicos;
 
     public Long getId() {
         return id;
     }
 
+    public Orcamento(Long id, String observacoes, String taxaAuxiliar, String valorTotal) {
+        this.id = id;
+        this.observacoes = observacoes;
+        this.taxaAuxiliar = taxaAuxiliar;
+        this.valorTotal = valorTotal;
+        this.enderecos = new ArrayList<>();
+        this.servicos = new ArrayList<>();
+    }
 }

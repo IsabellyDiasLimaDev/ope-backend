@@ -1,6 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,10 +16,18 @@ public class Auxiliar {
     @Column(name = "tipo_servico")
     private String tipoServico;
     private String email;
-    @OneToMany
-    Set<ServicoAuxiliar> servicoAuxiliar;
+    @ManyToMany(mappedBy = "auxiliares")
+    private List<Servico> servicos;
 
     public Long getId() {
         return id;
+    }
+
+    public List<Servico> getServicos() {
+        return servicos;
+    }
+
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
     }
 }

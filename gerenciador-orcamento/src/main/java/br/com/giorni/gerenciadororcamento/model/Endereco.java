@@ -1,6 +1,8 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +18,16 @@ public class Endereco {
     private String bairro;
     private String logradouro;
     private String estado;
-    @OneToMany
-    private Set<EnderecoOrcamento> enderecoOrcamentos;
+    @ManyToMany
+    @JoinTable(name = "tb_endereco_orcamento",
+    joinColumns = @JoinColumn(name = "endereco_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "orcammento_id", referencedColumnName = "id"))
+    private List<Orcamento> orcamentos;
+
+    public List<Orcamento> getOrcamentos() {
+        if (orcamentos == null){
+            orcamentos = new ArrayList<>();
+        }
+        return orcamentos;
+    }
 }

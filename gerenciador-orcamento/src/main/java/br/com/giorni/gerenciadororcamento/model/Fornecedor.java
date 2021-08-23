@@ -2,6 +2,8 @@ package br.com.giorni.gerenciadororcamento.model;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,10 +16,31 @@ public class Fornecedor {
     private String nome;
     private String email;
     private String telefone;
-    @OneToMany
-    Set<FornecedorMaterial> fornecedorMateriais;
+    @ManyToMany
+    @JoinTable(
+            name="tb_fornecedor_material",
+            joinColumns = @JoinColumn(name="fornecedor_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="material_id", referencedColumnName = "id")
+    )
+    private List<Material> materiais;
+
+    public Fornecedor(Long id, String nome, String email, String telefone) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.materiais = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public List<Material> getMateriais() {
+        return materiais;
+    }
+
+    public void setMateriais(List<Material> materiais) {
+        this.materiais = materiais;
     }
 }
