@@ -5,28 +5,40 @@ import br.com.giorni.gerenciadororcamento.model.Material;
 import br.com.giorni.gerenciadororcamento.model.Orcamento;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ServicoDTO {
 
     private Long id;
+    @JsonProperty("quantidade_disponivel")
     private Integer quantidadeDisponivel;
+    @JsonProperty("valor_mao_de_obra")
     private Double valorMaoDeObra;
+    @JsonProperty("valor_total")
     private Double valorTotal;
     private String descricao;
-    @JsonFormat(pattern = "dd-MM-YYYY")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_inicial")
-    private Date dtInicial;
-    @JsonFormat(pattern = "dd-MM-YYYY")
+    private LocalDate dtInicial;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_final")
-    private Date dtFinal;
+    private LocalDate dtFinal;
     private List<Material> materiais;
     private List<Auxiliar> auxiliares;
     private List<Orcamento> orcamentos;
 
-    public ServicoDTO(Long id, Integer quantidadeDisponivel, Double valorMaoDeObra, Double valorTotal, String descricao, Date dtInicial, Date dtFinal, List<Material> materiais, List<Auxiliar> auxiliares, List<Orcamento> orcamentos) {
+    public ServicoDTO(Long id, Integer quantidadeDisponivel, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Material> materiais, List<Auxiliar> auxiliares, List<Orcamento> orcamentos) {
         this.id = id;
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.valorMaoDeObra = valorMaoDeObra;
@@ -82,19 +94,19 @@ public class ServicoDTO {
         this.descricao = descricao;
     }
 
-    public Date getDtInicial() {
+    public LocalDate getDtInicial() {
         return dtInicial;
     }
 
-    public void setDtInicial(Date dtInicial) {
+    public void setDtInicial(LocalDate dtInicial) {
         this.dtInicial = dtInicial;
     }
 
-    public Date getDtFinal() {
+    public LocalDate getDtFinal() {
         return dtFinal;
     }
 
-    public void setDtFinal(Date dtFinal) {
+    public void setDtFinal(LocalDate dtFinal) {
         this.dtFinal = dtFinal;
     }
 

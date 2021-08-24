@@ -1,8 +1,13 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,11 +27,15 @@ public class Servico {
     private Double valorTotal;
     private String descricao;
     @Column(name = "dt_inicial")
-    @JsonFormat(pattern = "dd-MM-YYYY")
-    private Date dtInicial;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate dtInicial;
     @Column(name = "dt_final")
-    @JsonFormat(pattern = "dd-MM-YYYY")
-    private Date dtFinal;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate dtFinal;
     @ManyToMany(mappedBy = "servicos")
     private List<Material> materiais;
     @ManyToMany
@@ -40,7 +49,7 @@ public class Servico {
             inverseJoinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"))
     private List<Orcamento> orcamentos;
 
-    public Servico(Long id, Integer quantidadeDisponivel, Double valorMaoDeObra, Double valorTotal, String descricao, Date dtInicial, Date dtFinal) {
+    public Servico(Long id, Integer quantidadeDisponivel, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal) {
         this.id = id;
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.valorMaoDeObra = valorMaoDeObra;
@@ -117,19 +126,19 @@ public class Servico {
         this.descricao = descricao;
     }
 
-    public Date getDtInicial() {
+    public LocalDate getDtInicial() {
         return dtInicial;
     }
 
-    public void setDtInicial(Date dtInicial) {
+    public void setDtInicial(LocalDate dtInicial) {
         this.dtInicial = dtInicial;
     }
 
-    public Date getDtFinal() {
+    public LocalDate getDtFinal() {
         return dtFinal;
     }
 
-    public void setDtFinal(Date dtFinal) {
+    public void setDtFinal(LocalDate dtFinal) {
         this.dtFinal = dtFinal;
     }
 
