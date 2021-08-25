@@ -1,5 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ public class Material {
     private String tipo;
     private String categoria;
     @Column(name = "quantidade_disponivel")
+    @JsonProperty("quantidade_disponivel")
     private Integer quantidadeDisponivel;
     private String descricao;
     private String cor;
@@ -46,6 +49,8 @@ public class Material {
         this.servicos = new ArrayList<>();
     }
 
+    public Material(){}
+
     public Long getId() {
         return id;
     }
@@ -62,6 +67,66 @@ public class Material {
             servicos = new ArrayList<>();
         }
         return servicos;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public Integer getQuantidadeDisponivel() {
+        return quantidadeDisponivel;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public void setFornecedores(List<Fornecedor> fornecedores) {
+        this.fornecedores = fornecedores;
+    }
+
+    public void setServicos(List<Servico> servicos) {
+        this.servicos = servicos;
     }
 
     public void adicionarFornecedor(Fornecedor fornecedor) {
