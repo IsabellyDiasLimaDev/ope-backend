@@ -5,7 +5,7 @@ import br.com.giorni.gerenciadororcamento.service.dto.MaterialDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper()
+@Mapper(componentModel = "spring")
 public interface MaterialMapper {
 
     MaterialMapper INSTANCE = Mappers.getMapper(MaterialMapper.class);

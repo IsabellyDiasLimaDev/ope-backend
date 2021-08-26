@@ -3,8 +3,7 @@ package br.com.giorni.gerenciadororcamento.service.dto;
 import br.com.giorni.gerenciadororcamento.model.Auxiliar;
 import br.com.giorni.gerenciadororcamento.model.Material;
 import br.com.giorni.gerenciadororcamento.model.Orcamento;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -34,8 +33,11 @@ public class ServicoDTO {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_final")
     private LocalDate dtFinal;
+    @JsonIgnoreProperties({"servicos"})
     private List<Material> materiais;
+    @JsonIgnore
     private List<Auxiliar> auxiliares;
+    @JsonIgnore
     private List<Orcamento> orcamentos;
 
     public ServicoDTO(Long id, Integer quantidadeDisponivel, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Material> materiais, List<Auxiliar> auxiliares, List<Orcamento> orcamentos) {

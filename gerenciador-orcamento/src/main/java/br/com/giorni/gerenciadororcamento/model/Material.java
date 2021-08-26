@@ -1,5 +1,6 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -29,7 +30,8 @@ public class Material {
             inverseJoinColumns = @JoinColumn(name="material_id", referencedColumnName = "id")
     )
     private List<Fornecedor> fornecedores;
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.PERSIST)
+    @JsonIgnoreProperties({"materiais"})
     @JoinTable(
             name="tb_material_servico",
             joinColumns = @JoinColumn(name="material_id", referencedColumnName = "id"),

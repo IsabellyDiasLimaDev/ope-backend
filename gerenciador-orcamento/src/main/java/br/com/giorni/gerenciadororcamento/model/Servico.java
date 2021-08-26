@@ -1,6 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -36,7 +37,8 @@ public class Servico {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dtFinal;
-    @ManyToMany(mappedBy = "servicos")
+    @JsonIgnoreProperties({"servicos"})
+    @ManyToMany(mappedBy = "servicos", cascade = CascadeType.PERSIST)
     private List<Material> materiais;
     @ManyToMany
     @JoinTable(name = "tb_servico_auxiliar",
