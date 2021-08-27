@@ -16,8 +16,6 @@ import java.util.List;
 public class ServicoDTO {
 
     private Long id;
-    @JsonProperty("quantidade_disponivel")
-    private Integer quantidadeDisponivel;
     @JsonProperty("valor_mao_de_obra")
     private Double valorMaoDeObra;
     @JsonProperty("valor_total")
@@ -40,9 +38,8 @@ public class ServicoDTO {
     @JsonIgnore
     private List<Orcamento> orcamentos;
 
-    public ServicoDTO(Long id, Integer quantidadeDisponivel, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Material> materiais, List<Auxiliar> auxiliares, List<Orcamento> orcamentos) {
+    public ServicoDTO(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Material> materiais, List<Auxiliar> auxiliares, List<Orcamento> orcamentos) {
         this.id = id;
-        this.quantidadeDisponivel = quantidadeDisponivel;
         this.valorMaoDeObra = valorMaoDeObra;
         this.valorTotal = valorTotal;
         this.descricao = descricao;
@@ -62,14 +59,6 @@ public class ServicoDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getQuantidadeDisponivel() {
-        return quantidadeDisponivel;
-    }
-
-    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
     public Double getValorMaoDeObra() {

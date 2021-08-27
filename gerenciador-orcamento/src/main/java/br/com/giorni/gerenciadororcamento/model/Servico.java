@@ -20,8 +20,6 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "quantidade_disponivel")
-    private Integer quantidadeDisponivel;
     @Column(name = "valor_mao_de_obra")
     private Double valorMaoDeObra;
     @Column(name = "valor_total")
@@ -51,9 +49,8 @@ public class Servico {
             inverseJoinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"))
     private List<Orcamento> orcamentos;
 
-    public Servico(Long id, Integer quantidadeDisponivel, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal) {
+    public Servico(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal) {
         this.id = id;
-        this.quantidadeDisponivel = quantidadeDisponivel;
         this.valorMaoDeObra = valorMaoDeObra;
         this.valorTotal = valorTotal;
         this.descricao = descricao;
@@ -94,14 +91,6 @@ public class Servico {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getQuantidadeDisponivel() {
-        return quantidadeDisponivel;
-    }
-
-    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
     public Double getValorMaoDeObra() {

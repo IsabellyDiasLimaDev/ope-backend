@@ -44,7 +44,6 @@ public class ServicoService {
             servico.get().setMateriais(servicoDTO.getMateriais());
             servico.get().setAuxiliares(servicoDTO.getAuxiliares());
             servico.get().setOrcamentos(servicoDTO.getOrcamentos());
-            servico.get().setQuantidadeDisponivel(servicoDTO.getQuantidadeDisponivel());
             servico.get().setValorMaoDeObra(servicoDTO.getValorMaoDeObra());
             servico.get().setValorTotal(servicoDTO.getValorTotal());
             servico.get().setDtInicial(servicoDTO.getDtInicial());

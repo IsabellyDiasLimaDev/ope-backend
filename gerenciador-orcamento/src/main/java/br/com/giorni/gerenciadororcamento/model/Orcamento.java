@@ -17,8 +17,6 @@ public class Orcamento {
     private String taxaAuxiliar;
     @Column(name = "valor_total")
     private String valorTotal;
-    @ManyToOne(mappedBy = "orcamento")
-    private Cliente cliente;
     @ManyToMany(mappedBy = "orcamentos")
     private List<Servico> servicos;
 
