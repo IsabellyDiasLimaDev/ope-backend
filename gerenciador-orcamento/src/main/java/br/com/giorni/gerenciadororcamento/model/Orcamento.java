@@ -17,9 +17,8 @@ public class Orcamento {
     private String taxaAuxiliar;
     @Column(name = "valor_total")
     private String valorTotal;
-
-    @ManyToMany(mappedBy = "orcamentos")
-    private List<Endereco> enderecos;
+    @ManyToOne(mappedBy = "orcamento")
+    private Cliente cliente;
     @ManyToMany(mappedBy = "orcamentos")
     private List<Servico> servicos;
 
@@ -32,7 +31,6 @@ public class Orcamento {
         this.observacoes = observacoes;
         this.taxaAuxiliar = taxaAuxiliar;
         this.valorTotal = valorTotal;
-        this.enderecos = new ArrayList<>();
         this.servicos = new ArrayList<>();
     }
 }
