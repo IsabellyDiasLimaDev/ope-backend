@@ -35,9 +35,7 @@ public class Servico {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dtFinal;
-    @JsonIgnoreProperties({"servicos"})
-    @ManyToMany(mappedBy = "servicos", cascade = CascadeType.PERSIST)
-    private List<Material> materiais;
+
     @ManyToMany
     @JoinTable(name = "tb_servico_auxiliar",
             joinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"),
@@ -57,7 +55,6 @@ public class Servico {
         this.dtInicial = dtInicial;
         this.dtFinal = dtFinal;
         this.auxiliares = new ArrayList<>();
-        this.materiais = new ArrayList<>();
         this.orcamentos = new ArrayList<>();
     }
 
@@ -79,15 +76,6 @@ public class Servico {
     public void setAuxiliares(List<Auxiliar> auxiliares) {
         this.auxiliares = auxiliares;
     }
-
-    public List<Material> getMateriais() {
-        return materiais;
-    }
-
-    public void setMateriais(List<Material> materiais) {
-        this.materiais = materiais;
-    }
-
 
     public void setId(Long id) {
         this.id = id;
