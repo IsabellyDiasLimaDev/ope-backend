@@ -30,7 +30,7 @@ public class Material {
             inverseJoinColumns = @JoinColumn(name="material_id", referencedColumnName = "id")
     )
     private List<Fornecedor> fornecedores;
-    @ManyToMany(cascade=CascadeType.PERSIST)
+    @ManyToMany(cascade= {CascadeType.ALL})
     @JsonIgnoreProperties({"materiais"})
     @JoinTable(
             name="tb_material_servico",

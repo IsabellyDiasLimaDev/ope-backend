@@ -36,7 +36,7 @@ public class Servico {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dtFinal;
     @JsonIgnoreProperties({"servicos"})
-    @ManyToMany(mappedBy = "servicos", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "servicos", cascade = {CascadeType.ALL})
     private List<Material> materiais;
     @ManyToMany
     @JoinTable(name = "tb_servico_auxiliar",
