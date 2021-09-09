@@ -23,6 +23,10 @@ public class Material {
     private Integer quantidadeDisponivel;
     private String descricao;
     private String cor;
+
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL)
+    private List<MaterialServico> materiais = new ArrayList<>();
+
     @ManyToMany
     @JoinTable(
             name="tb_fornecedor_material",
@@ -32,11 +36,6 @@ public class Material {
     private List<Fornecedor> fornecedores;
     @ManyToMany(cascade= {CascadeType.ALL})
     @JsonIgnoreProperties({"materiais"})
-    @JoinTable(
-            name="tb_material_servico",
-            joinColumns = @JoinColumn(name="material_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name="servico_id", referencedColumnName = "id")
-    )
     private List<Servico> servicos;
 
     public Material(Long id, Double preco, String tipo, String categoria, Integer quantidadeDisponivel, String descricao, String cor) {
@@ -141,13 +140,16 @@ public class Material {
         }
     }
 
-    public void adicionarServico(Servico servico) {
-        if(servico != null && !getServicos().contains(servico)) {
-            getServicos().add(servico);
+    public void adicionarServico(MaterialServico materiais) {
+        materiais.setMaterial(this);
+        this.getMateriais().add(materiais);
+    }
 
-            if(!servico.getMateriais().contains(this)) {
-                servico.getMateriais().add(this);
-            }
-        }
+    public List<MaterialServico> getMateriais() {
+        return materiais;
+    }
+
+    public void setMateriais(List<MaterialServico> materiais) {
+        this.materiais = materiais;
     }
 }

@@ -52,6 +52,7 @@ public class ServicoService {
         Optional<Servico> servico = servicoRepository.findById(id);
         if (servico.isPresent()){
             servico.get().setDescricao(servicoDTO.getDescricao());
+            // servico.get().setMateriais(servicoDTO.getMateriais());
             servico.get().setAuxiliares(servicoDTO.getAuxiliares());
             servico.get().setOrcamentos(servicoDTO.getOrcamentos());
             servico.get().setValorMaoDeObra(servicoDTO.getValorMaoDeObra());

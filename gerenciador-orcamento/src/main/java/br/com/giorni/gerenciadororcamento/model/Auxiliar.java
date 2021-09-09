@@ -15,6 +15,7 @@ public class Auxiliar {
     private String nome;
     @Column(name = "tipo_servico")
     private String tipoServico;
+    private boolean disponbibilidade;
     private String email;
     @ManyToMany(mappedBy = "auxiliares")
     private List<Servico> servicos;
