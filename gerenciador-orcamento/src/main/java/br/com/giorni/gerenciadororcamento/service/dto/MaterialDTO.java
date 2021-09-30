@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class MaterialDTO {
@@ -22,7 +23,8 @@ public class MaterialDTO {
     private String descricao;
     private String cor;
     @JsonIgnore
-    private List<Fornecedor> fornecedores;
+    //TODO criar um DTO e desamarrar o DTO da entidade
+    private List<FornecedorDTO> fornecedores;
     @JsonIgnoreProperties({"materiais"})
     private List<Servico> servicos;
 
@@ -37,7 +39,8 @@ public class MaterialDTO {
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.descricao = descricao;
         this.cor = cor;
-        this.fornecedores = fornecedores;
+        this.fornecedores = fornecedores.stream().map(Fornecedor::toDto).collect(Collectors.toList());
+        //TODO fazer o mesmo do fornecedor com servico
         this.servicos = servicos;
     }
 
@@ -45,71 +48,38 @@ public class MaterialDTO {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Double getPreco() {
         return preco;
-    }
-
-    public void setPreco(Double preco) {
-        this.preco = preco;
     }
 
     public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
 
     public Integer getQuantidadeDisponivel() {
         return quantidadeDisponivel;
-    }
-
-    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
     public String getCor() {
         return cor;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
-    public List<Fornecedor> getFornecedores() {
+    public List<FornecedorDTO> getFornecedores() {
         return fornecedores;
-    }
-
-    public void setFornecedores(List<Fornecedor> fornecedores) {
-        this.fornecedores = fornecedores;
     }
 
     public List<Servico> getServicos() {
         return servicos;
     }
 
-    public void setServicos(List<Servico> servicos) {
-        this.servicos = servicos;
-    }
 }

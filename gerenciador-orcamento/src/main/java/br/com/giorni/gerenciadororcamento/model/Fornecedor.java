@@ -1,6 +1,8 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 
+import br.com.giorni.gerenciadororcamento.service.dto.FornecedorDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,5 +44,9 @@ public class Fornecedor {
 
     public void setMateriais(List<Material> materiais) {
         this.materiais = materiais;
+    }
+
+    public FornecedorDTO toDto(){
+        return new FornecedorDTO(this.id,this.nome,this.email,this.telefone);
     }
 }

@@ -1,10 +1,8 @@
 package br.com.giorni.gerenciadororcamento.controller;
 
 import br.com.giorni.gerenciadororcamento.model.Material;
-import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.MaterialService;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialDTO;
-import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
