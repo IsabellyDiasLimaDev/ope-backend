@@ -1,5 +1,6 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.MaterialDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -152,4 +153,6 @@ public class Material {
     public void setMateriais(List<MaterialServico> materiais) {
         this.materiais = materiais;
     }
+
+    public MaterialDTO toDto() { return new MaterialDTO(this.id, this.preco, this.tipo, this.categoria, this.quantidadeDisponivel, this.descricao, this.cor, this.fornecedores, this.servicos);}
 }

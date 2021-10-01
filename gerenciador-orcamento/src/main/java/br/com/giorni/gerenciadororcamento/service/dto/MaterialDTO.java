@@ -23,10 +23,9 @@ public class MaterialDTO {
     private String descricao;
     private String cor;
     @JsonIgnore
-    //TODO criar um DTO e desamarrar o DTO da entidade
     private List<FornecedorDTO> fornecedores;
     @JsonIgnoreProperties({"materiais"})
-    private List<Servico> servicos;
+    private List<ServicoDTO> servicos;
 
     public MaterialDTO() {
     }
@@ -40,8 +39,7 @@ public class MaterialDTO {
         this.descricao = descricao;
         this.cor = cor;
         this.fornecedores = fornecedores.stream().map(Fornecedor::toDto).collect(Collectors.toList());
-        //TODO fazer o mesmo do fornecedor com servico
-        this.servicos = servicos;
+        this.servicos = servicos.stream().map(Servico::toDto).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -78,7 +76,7 @@ public class MaterialDTO {
         return fornecedores;
     }
 
-    public List<Servico> getServicos() {
+    public List<ServicoDTO> getServicos() {
         return servicos;
     }
 

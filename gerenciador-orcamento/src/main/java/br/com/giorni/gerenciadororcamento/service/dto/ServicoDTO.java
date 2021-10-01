@@ -3,6 +3,7 @@ package br.com.giorni.gerenciadororcamento.service.dto;
 import br.com.giorni.gerenciadororcamento.model.Auxiliar;
 import br.com.giorni.gerenciadororcamento.model.Material;
 import br.com.giorni.gerenciadororcamento.model.Orcamento;
+import br.com.giorni.gerenciadororcamento.model.Servico;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -12,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ServicoDTO {
 
@@ -32,11 +34,11 @@ public class ServicoDTO {
     @JsonProperty("dt_final")
     private LocalDate dtFinal;
     @JsonIgnoreProperties({"servicos"})
-    private List<Material> materiais;
+    private List<MaterialDTO> materiais;
     @JsonIgnore
-    private List<Auxiliar> auxiliares;
+    private List<AuxiliarDTO> auxiliares;
     @JsonIgnore
-    private List<Orcamento> orcamentos;
+    private List<OrcamentoDTO> orcamentos;
 
     public ServicoDTO(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Material> materiais, List<Auxiliar> auxiliares, List<Orcamento> orcamentos) {
         this.id = id;
@@ -45,12 +47,15 @@ public class ServicoDTO {
         this.descricao = descricao;
         this.dtInicial = dtInicial;
         this.dtFinal = dtFinal;
-        this.materiais = materiais;
-        this.auxiliares = auxiliares;
-        this.orcamentos = orcamentos;
+        this.materiais = materiais.stream().map(Material::toDto).collect(Collectors.toList());
+        this.auxiliares = auxiliares.stream().map(Auxiliar::toDto).collect(Collectors.toList());
+        this.orcamentos = orcamentos.stream().map(Orcamento::toDto).collect(Collectors.toList());
     }
 
     public ServicoDTO() {
+    }
+
+    public ServicoDTO(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Auxiliar> auxiliares, List<Orcamento> orcamentos) {
     }
 
     public Long getId() {
@@ -101,27 +106,27 @@ public class ServicoDTO {
         this.dtFinal = dtFinal;
     }
 
-    public List<Material> getMateriais() {
+    public List<MaterialDTO> getMateriais() {
         return materiais;
     }
 
-    public void setMateriais(List<Material> materiais) {
+    public void setMateriais(List<MaterialDTO> materiais) {
         this.materiais = materiais;
     }
 
-    public List<Auxiliar> getAuxiliares() {
+    public List<AuxiliarDTO> getAuxiliares() {
         return auxiliares;
     }
 
-    public void setAuxiliares(List<Auxiliar> auxiliares) {
+    public void setAuxiliares(List<AuxiliarDTO> auxiliares) {
         this.auxiliares = auxiliares;
     }
 
-    public List<Orcamento> getOrcamentos() {
+    public List<OrcamentoDTO> getOrcamentos() {
         return orcamentos;
     }
 
-    public void setOrcamentos(List<Orcamento> orcamentos) {
+    public void setOrcamentos(List<OrcamentoDTO> orcamentos) {
         this.orcamentos = orcamentos;
     }
 }

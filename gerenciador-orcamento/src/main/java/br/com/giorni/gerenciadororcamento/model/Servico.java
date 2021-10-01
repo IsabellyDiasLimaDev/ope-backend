@@ -1,5 +1,6 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -137,4 +138,6 @@ public class Servico {
             }
         }
     }
+
+    public ServicoDTO toDto() { return new ServicoDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, this.auxiliares, this.orcamentos); }
 }

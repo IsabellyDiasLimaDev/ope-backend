@@ -1,5 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -31,4 +33,6 @@ public class Auxiliar {
     public void setServicos(List<Servico> servicos) {
         this.servicos = servicos;
     }
+
+    public AuxiliarDTO toDto() {return new AuxiliarDTO(this.id, this.telefone, this.nome, this.tipoServico, this.disponbibilidade, this.email);}
 }

@@ -1,5 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,4 +33,6 @@ public class Orcamento {
         this.valorTotal = valorTotal;
         this.servicos = new ArrayList<>();
     }
+
+    public OrcamentoDTO toDto() {return new OrcamentoDTO(this.id, this.observacoes, this.taxaAuxiliar, this.valorTotal);}
 }
