@@ -1,5 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.EmpresaDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,5 +16,7 @@ public class Empresa {
     @OneToOne
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
+
+    public EmpresaDTO toDto() { return new EmpresaDTO(this.id, this.nomeFantasia, this.endereco);}
 
 }

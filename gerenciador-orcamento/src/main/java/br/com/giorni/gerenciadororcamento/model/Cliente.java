@@ -1,5 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.ClienteDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,4 +28,6 @@ public class Cliente {
     public Long getId() {
         return id;
     }
+
+    public ClienteDTO toDto() { return new ClienteDTO(this.id, this.tipoCliente, this.email, this.nome, this.endereco, this.cpfCnpj, this.telefone);}
 }

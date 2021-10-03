@@ -1,5 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.EnderecoDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;;
+    private Long id;
     private String numero;
     private String cep;
     private String cidade;
@@ -30,4 +32,6 @@ public class Endereco {
         }
         return orcamentos;
     }
+
+    public EnderecoDTO toDto() { return new EnderecoDTO(this.id, this.numero, this.cep, this.cidade, this.bairro, this.logradouro, this.estado);}
 }
