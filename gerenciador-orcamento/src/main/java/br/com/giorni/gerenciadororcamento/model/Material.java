@@ -1,15 +1,21 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "tb_material")
 public class Material {
     @Id
@@ -25,19 +31,8 @@ public class Material {
     private String descricao;
     private String cor;
 
-    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL)
-    private List<MaterialServico> materiais = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(
-            name="tb_fornecedor_material",
-            joinColumns = @JoinColumn(name="fornecedor_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name="material_id", referencedColumnName = "id")
-    )
+    @ManyToMany(mappedBy = "materiais")
     private List<Fornecedor> fornecedores;
-    @ManyToMany(cascade= {CascadeType.ALL})
-    @JsonIgnoreProperties({"materiais"})
-    private List<Servico> servicos;
 
     public Material(Long id, Double preco, String tipo, String categoria, Integer quantidadeDisponivel, String descricao, String cor) {
         this.id = id;
@@ -48,87 +43,14 @@ public class Material {
         this.descricao = descricao;
         this.cor = cor;
         this.fornecedores = new ArrayList<>();
-        this.servicos = new ArrayList<>();
     }
 
-    public Material(){}
-
-    public Long getId() {
-        return id;
-    }
 
     public List<Fornecedor> getFornecedores() {
         if(fornecedores == null) {
             fornecedores = new ArrayList<>();
         }
         return fornecedores;
-    }
-
-    public List<Servico> getServicos() {
-        if(servicos == null) {
-            servicos = new ArrayList<>();
-        }
-        return servicos;
-    }
-
-    public Double getPreco() {
-        return preco;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public Integer getQuantidadeDisponivel() {
-        return quantidadeDisponivel;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public String getCor() {
-        return cor;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setPreco(Double preco) {
-        this.preco = preco;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
-    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
-        this.quantidadeDisponivel = quantidadeDisponivel;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
-    public void setFornecedores(List<Fornecedor> fornecedores) {
-        this.fornecedores = fornecedores;
-    }
-
-    public void setServicos(List<Servico> servicos) {
-        this.servicos = servicos;
     }
 
     public void adicionarFornecedor(Fornecedor fornecedor) {
@@ -141,18 +63,8 @@ public class Material {
         }
     }
 
-    public void adicionarServico(MaterialServico materiais) {
-        materiais.setMaterial(this);
-        this.getMateriais().add(materiais);
+    public MaterialDTO toDto() {
+        var fornecedorDTO = fornecedores.stream().map(Fornecedor::toDto).collect(Collectors.toList());
+        return new MaterialDTO(this.id, this.preco, this.tipo, this.categoria, this.quantidadeDisponivel, this.descricao, this.cor, fornecedorDTO);
     }
-
-    public List<MaterialServico> getMateriais() {
-        return materiais;
-    }
-
-    public void setMateriais(List<MaterialServico> materiais) {
-        this.materiais = materiais;
-    }
-
-    public MaterialDTO toDto() { return new MaterialDTO(this.id, this.preco, this.tipo, this.categoria, this.quantidadeDisponivel, this.descricao, this.cor, this.fornecedores, this.servicos);}
 }

@@ -1,7 +1,12 @@
 package br.com.giorni.gerenciadororcamento.service.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Value;
+
 import javax.persistence.Column;
 
+@Value
+@AllArgsConstructor(onConstructor_={@Default})
 public class AuxiliarDTO {
     private Long id;
     private String telefone;
@@ -9,37 +14,4 @@ public class AuxiliarDTO {
     private String tipoServico;
     private boolean disponbibilidade;
     private String email;
-
-    public AuxiliarDTO(Long id, String telefone, String nome, String tipoServico, boolean disponibilidade, String email) {
-        this.id = id;
-        this.telefone = telefone;
-        this.nome = nome;
-        this.tipoServico = tipoServico;
-        this.disponbibilidade = disponibilidade;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getTipoServico() {
-        return tipoServico;
-    }
-
-    public boolean isDisponbibilidade() {
-        return disponbibilidade;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 }

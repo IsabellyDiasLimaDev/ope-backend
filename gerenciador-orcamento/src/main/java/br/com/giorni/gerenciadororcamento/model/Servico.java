@@ -1,20 +1,30 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoSemMaterialDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "tb_servico")
 public class Servico {
     @Id
@@ -46,98 +56,47 @@ public class Servico {
             joinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"))
     private List<Orcamento> orcamentos;
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL)
+    private List<MaterialServico> materiais = new ArrayList<>();
 
-    public Servico(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal) {
+    public Servico(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Auxiliar> auxiliares, List<MaterialServico> materiais) {
         this.id = id;
         this.valorMaoDeObra = valorMaoDeObra;
         this.valorTotal = valorTotal;
         this.descricao = descricao;
         this.dtInicial = dtInicial;
         this.dtFinal = dtFinal;
-        this.auxiliares = new ArrayList<>();
+        this.auxiliares = auxiliares;
         this.orcamentos = new ArrayList<>();
-    }
-
-    public Servico() {
-    }
-
-    public Long getId() {
-        return id;
+        this.materiais = materiais;
     }
 
     public List<Auxiliar> getAuxiliares() {
-        if(auxiliares == null) {
+        if (auxiliares == null) {
             auxiliares = new ArrayList<>();
         }
 
         return auxiliares;
     }
 
-    public void setAuxiliares(List<Auxiliar> auxiliares) {
-        this.auxiliares = auxiliares;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Double getValorMaoDeObra() {
-        return valorMaoDeObra;
-    }
-
-    public void setValorMaoDeObra(Double valorMaoDeObra) {
-        this.valorMaoDeObra = valorMaoDeObra;
-    }
-
-    public Double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public LocalDate getDtInicial() {
-        return dtInicial;
-    }
-
-    public void setDtInicial(LocalDate dtInicial) {
-        this.dtInicial = dtInicial;
-    }
-
-    public LocalDate getDtFinal() {
-        return dtFinal;
-    }
-
-    public void setDtFinal(LocalDate dtFinal) {
-        this.dtFinal = dtFinal;
-    }
-
-    public List<Orcamento> getOrcamentos() {
-        return orcamentos;
-    }
-
-    public void setOrcamentos(List<Orcamento> orcamentos) {
-        this.orcamentos = orcamentos;
-    }
-
     public void adicionarAuxiliar(Auxiliar auxiliar) {
-        if(auxiliar != null && !getAuxiliares().contains(auxiliar)) {
+        if (auxiliar != null && !getAuxiliares().contains(auxiliar)) {
             getAuxiliares().add(auxiliar);
 
-            if(!auxiliar.getServicos().contains(this)) {
+            if (!auxiliar.getServicos().contains(this)) {
                 auxiliar.getServicos().add(this);
             }
         }
     }
 
-    public ServicoDTO toDto() { return new ServicoDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, this.auxiliares, this.orcamentos); }
+    public ServicoDTO toDto() {
+        var materialDTO = materiais.stream().map(MaterialServico::toDto).collect(Collectors.toList());
+        var auxiliarDTO = auxiliares.stream().map(Auxiliar::toDto).collect(Collectors.toList());
+        return new ServicoDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, materialDTO, auxiliarDTO);
+    }
+
+    public ServicoSemMaterialDTO toDtoSemMaterial() {
+        var auxiliarDTO = auxiliares.stream().map(Auxiliar::toDto).collect(Collectors.toList());
+        return new ServicoSemMaterialDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, auxiliarDTO);
+    }
 }

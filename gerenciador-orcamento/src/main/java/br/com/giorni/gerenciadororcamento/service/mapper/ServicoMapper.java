@@ -1,5 +1,6 @@
 package br.com.giorni.gerenciadororcamento.service.mapper;
 
+import br.com.giorni.gerenciadororcamento.model.Material;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import org.mapstruct.Mapper;

@@ -1,8 +1,17 @@
 package br.com.giorni.gerenciadororcamento.model;
 
+import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name="tb_material_servico")
 public class MaterialServico {
 
@@ -14,9 +23,11 @@ public class MaterialServico {
     private Integer quantidadeMaterial;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "material_id", referencedColumnName = "id")
     private Material material;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "servico_id", referencedColumnName = "id")
     private Servico servico;
 
     public MaterialServico(Integer quantidadeMaterial, Material material, Servico servico) {
@@ -25,35 +36,7 @@ public class MaterialServico {
         this.servico = servico;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getQuantidadeMaterial() {
-        return quantidadeMaterial;
-    }
-
-    public void setQuantidadeMaterial(Integer quantidadeMaterial) {
-        this.quantidadeMaterial = quantidadeMaterial;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    public Servico getServico() {
-        return servico;
-    }
-
-    public void setServico(Servico servico) {
-        this.servico = servico;
+    public MaterialServicoDTO toDto(){
+        return new MaterialServicoDTO(this.id, this.quantidadeMaterial, this.material.toDto());
     }
 }

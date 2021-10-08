@@ -27,10 +27,10 @@ public class MaterialController {
         return materialService.save(materialDTO);
     }
 
-    @GetMapping(path = "/with-service")
-    public ResponseEntity<?> findAllWithService(){
-        return ResponseEntity.ok().body(materialService.findAllWithService());
-    }
+//    @GetMapping(path = "/with-service")
+//    public ResponseEntity<?> findAllWithService(){
+//        return ResponseEntity.ok().body(materialService.findAllWithService());
+//    }
 
     @GetMapping
     public ResponseEntity<List<MaterialDTO>> findAll(){

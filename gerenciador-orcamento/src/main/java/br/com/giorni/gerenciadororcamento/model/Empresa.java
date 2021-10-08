@@ -1,10 +1,17 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.EmpresaDTO;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "tb_empresa")
 public class Empresa {
 
@@ -17,6 +24,6 @@ public class Empresa {
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
-    public EmpresaDTO toDto() { return new EmpresaDTO(this.id, this.nomeFantasia, this.endereco);}
+    public EmpresaDTO toDto() { return new EmpresaDTO(this.id, this.nomeFantasia, this.endereco.toDto());}
 
 }

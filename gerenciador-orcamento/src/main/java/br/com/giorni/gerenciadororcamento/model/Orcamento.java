@@ -1,6 +1,10 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,6 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "tb_orcamento")
 public class Orcamento {
     @Id
@@ -21,10 +28,9 @@ public class Orcamento {
     private String valorTotal;
     @ManyToMany(mappedBy = "orcamentos")
     private List<Servico> servicos;
-
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+    private Cliente cliente;
 
     public Orcamento(Long id, String observacoes, String taxaAuxiliar, String valorTotal) {
         this.id = id;

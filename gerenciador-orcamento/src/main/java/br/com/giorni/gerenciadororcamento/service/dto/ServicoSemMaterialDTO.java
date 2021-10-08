@@ -1,7 +1,10 @@
 package br.com.giorni.gerenciadororcamento.service.dto;
 
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -14,7 +17,7 @@ import java.util.List;
 
 @Value
 @AllArgsConstructor(onConstructor_={@Default})
-public class ServicoDTO {
+public class ServicoSemMaterialDTO {
 
     private Long id;
     @JsonProperty("valor_mao_de_obra")
@@ -32,6 +35,5 @@ public class ServicoDTO {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_final")
     private LocalDate dtFinal;
-    private List<MaterialServicoDTO> materiais;
     private List<AuxiliarDTO> auxiliares;
 }

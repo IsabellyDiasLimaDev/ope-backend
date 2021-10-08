@@ -22,10 +22,10 @@ public class MaterialService {
         return materialRepository.save(material);
     }
 
-    public List findAllWithService(){
-        List list = materialRepository.findAllWithService();
-        return list;
-    }
+//    public List findAllWithService(){
+//        List list = materialRepository.findAllWithService();
+//        return list;
+//    }
 
     public List<MaterialDTO> findAll(){
         List<Material> materials = materialRepository.findAll();

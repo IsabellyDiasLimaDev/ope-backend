@@ -2,6 +2,10 @@ package br.com.giorni.gerenciadororcamento.model;
 
 
 import br.com.giorni.gerenciadororcamento.service.dto.FornecedorDTO;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +13,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "tb_fornecedor")
 public class Fornecedor {
     @Id
@@ -32,18 +39,6 @@ public class Fornecedor {
         this.email = email;
         this.telefone = telefone;
         this.materiais = new ArrayList<>();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public List<Material> getMateriais() {
-        return materiais;
-    }
-
-    public void setMateriais(List<Material> materiais) {
-        this.materiais = materiais;
     }
 
     public FornecedorDTO toDto(){

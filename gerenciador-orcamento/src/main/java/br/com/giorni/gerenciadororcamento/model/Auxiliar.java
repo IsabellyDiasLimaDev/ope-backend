@@ -1,12 +1,18 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.Default;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor(onConstructor_ = {@Default})
 @Table(name = "tb_auxiliar")
 public class Auxiliar {
     @Id
@@ -21,18 +27,6 @@ public class Auxiliar {
     private String email;
     @ManyToMany(mappedBy = "auxiliares")
     private List<Servico> servicos;
-
-    public Long getId() {
-        return id;
-    }
-
-    public List<Servico> getServicos() {
-        return servicos;
-    }
-
-    public void setServicos(List<Servico> servicos) {
-        this.servicos = servicos;
-    }
 
     public AuxiliarDTO toDto() {return new AuxiliarDTO(this.id, this.telefone, this.nome, this.tipoServico, this.disponbibilidade, this.email);}
 }
