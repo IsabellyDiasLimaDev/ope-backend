@@ -25,7 +25,7 @@ public class ServicoService {
     @Autowired
     private MaterialService materialService;
 
-    public Servico save(ServicoSemMaterialDTO servicoSemMaterialDTO ) {
+    public Servico save(ServicoDTO servicoDTO ) {
         var servico = ServicoMapper.INSTANCE.servicoDtoToServico(servicoDTO);
         return servicoRepository.save(servico);
     }

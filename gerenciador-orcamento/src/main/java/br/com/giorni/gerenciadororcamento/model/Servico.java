@@ -56,7 +56,9 @@ public class Servico {
             joinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"))
     private List<Orcamento> orcamentos;
-    @OneToMany(mappedBy = "servico", cascade = CascadeType.ALL)
+
+    //TODO Ajustar para relacionar Serviço com Material
+    @OneToMany(mappedBy = "servico", cascade = CascadeType.PERSIST)
     private List<MaterialServico> materiais = new ArrayList<>();
 
     public Servico(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Auxiliar> auxiliares, List<MaterialServico> materiais) {
