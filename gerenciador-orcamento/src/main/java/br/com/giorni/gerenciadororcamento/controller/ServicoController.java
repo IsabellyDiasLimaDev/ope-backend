@@ -1,7 +1,10 @@
 package br.com.giorni.gerenciadororcamento.controller;
 
+import br.com.giorni.gerenciadororcamento.model.MaterialServico;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.ServicoService;
+import br.com.giorni.gerenciadororcamento.service.dto.MaterialDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +24,8 @@ public class ServicoController {
     }
 
     @PostMapping
-    public Servico create(@RequestBody ServicoDTO servicoDTO){
-        return servicoService.save(servicoDTO);
+    public MaterialServico createServiceWithMaterial(@RequestBody MaterialServicoDTO materialServicoDTO){
+        return servicoService.save(materialServicoDTO);
     }
 
     @GetMapping

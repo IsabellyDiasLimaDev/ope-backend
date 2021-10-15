@@ -1,16 +1,14 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name="tb_material_servico")
 public class MaterialServico {
@@ -37,6 +35,6 @@ public class MaterialServico {
     }
 
     public MaterialServicoDTO toDto(){
-        return new MaterialServicoDTO(this.id, this.quantidadeMaterial, this.material.toDto());
+        return new MaterialServicoDTO(this.id, this.quantidadeMaterial, this.material.toDto(), this.servico.toDto());
     }
 }

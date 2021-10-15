@@ -11,4 +11,5 @@ public class MaterialServicoDTO {
     private Long id;
     private Integer quantidadeMaterial;
     private MaterialDTO material;
+    private ServicoDTO servico;
 }

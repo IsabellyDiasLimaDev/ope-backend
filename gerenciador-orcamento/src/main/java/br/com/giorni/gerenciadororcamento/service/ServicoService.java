@@ -1,10 +1,13 @@
 package br.com.giorni.gerenciadororcamento.service;
 
+import br.com.giorni.gerenciadororcamento.model.MaterialServico;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
 import br.com.giorni.gerenciadororcamento.repository.ServicoRepository;
+import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoSemMaterialDTO;
+import br.com.giorni.gerenciadororcamento.service.mapper.MaterialMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.ServicoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +28,14 @@ public class ServicoService {
     @Autowired
     private MaterialService materialService;
 
-    public Servico save(ServicoSemMaterialDTO servicoSemMaterialDTO ) {
-        var servico = ServicoMapper.INSTANCE.servicoDtoToServico(servicoDTO);
-        return servicoRepository.save(servico);
+    @Autowired
+    private MaterialServicoService materialServicoService;
+
+    public MaterialServico save(MaterialServicoDTO materialServicoDTO ) {
+        var servico = ServicoMapper.INSTANCE.servicoDtoToServico(materialServicoDTO.getServico());
+        var material = MaterialMapper.INSTANCE.materialDtoToMaterial(materialServicoDTO.getMaterial());
+        servico = servicoRepository.save(servico);
+        return materialServicoService.save(new MaterialServico(materialServicoDTO.getQuantidadeMaterial(), material, servico));
     }
 
     public List<ServicoDTO> findAll() {
