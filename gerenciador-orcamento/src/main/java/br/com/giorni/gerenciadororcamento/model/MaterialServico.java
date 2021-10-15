@@ -21,11 +21,11 @@ public class MaterialServico {
     private Integer quantidadeMaterial;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "material_id", referencedColumnName = "id")
+    //@JoinColumn(name = "material_id", referencedColumnName = "id")
     private Material material;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "servico_id", referencedColumnName = "id")
+    //@JoinColumn(name = "servico_id", referencedColumnName = "id")
     private Servico servico;
 
     public MaterialServico(Integer quantidadeMaterial, Material material, Servico servico) {
