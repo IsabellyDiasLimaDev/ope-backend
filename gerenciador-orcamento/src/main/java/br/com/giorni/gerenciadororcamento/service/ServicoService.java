@@ -41,7 +41,7 @@ public class ServicoService {
     public List<ServicoDTO> findAll() {
         List<Servico> servicos = servicoRepository.findAll();
         return servicos.stream()
-                .map(servico -> ServicoMapper.INSTANCE.servicoToServicoDto(servico))
+                .map(ServicoMapper.INSTANCE::servicoToServicoDto)
                 .collect(Collectors.toList());
     }
 

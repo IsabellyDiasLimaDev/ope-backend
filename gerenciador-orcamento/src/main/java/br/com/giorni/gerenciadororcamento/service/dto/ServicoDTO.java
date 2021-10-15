@@ -32,6 +32,7 @@ public class ServicoDTO {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_final")
     private LocalDate dtFinal;
+    //TODO ver como retirar o looping na hora de mostrar os serviços
     private List<MaterialServicoDTO> materiais;
     private List<AuxiliarDTO> auxiliares;
 }
