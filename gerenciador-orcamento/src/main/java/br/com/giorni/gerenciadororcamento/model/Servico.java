@@ -9,10 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,6 +22,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Table(name = "tb_servico")
 public class Servico {
     @Id
@@ -61,18 +59,6 @@ public class Servico {
     @OneToMany(mappedBy = "servico", cascade = CascadeType.PERSIST)
     private List<MaterialServico> materiais = new ArrayList<>();
 
-    public Servico(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Auxiliar> auxiliares, List<MaterialServico> materiais) {
-        this.id = id;
-        this.valorMaoDeObra = valorMaoDeObra;
-        this.valorTotal = valorTotal;
-        this.descricao = descricao;
-        this.dtInicial = dtInicial;
-        this.dtFinal = dtFinal;
-        this.auxiliares = auxiliares;
-        this.orcamentos = new ArrayList<>();
-        this.materiais = materiais;
-    }
-
     public List<Auxiliar> getAuxiliares() {
         if (auxiliares == null) {
             auxiliares = new ArrayList<>();
@@ -93,8 +79,9 @@ public class Servico {
 
     public ServicoDTO toDto() {
         var materialDTO = materiais.stream().map(MaterialServico::toDto).collect(Collectors.toList());
+        var orcamentoDTO = orcamentos.stream().map(Orcamento::toDto).collect(Collectors.toList());
         var auxiliarDTO = auxiliares.stream().map(Auxiliar::toDto).collect(Collectors.toList());
-        return new ServicoDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, materialDTO, auxiliarDTO);
+        return new ServicoDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, auxiliarDTO, orcamentoDTO,materialDTO);
     }
 
     public ServicoSemMaterialDTO toDtoSemMaterial() {

@@ -34,7 +34,7 @@ public class Material {
     @ManyToMany(mappedBy = "materiais")
     private List<Fornecedor> fornecedores;
 
-    public Material(Long id, Double preco, String tipo, String categoria, Integer quantidadeDisponivel, String descricao, String cor) {
+    public Material(Long id, Double preco, String tipo, String categoria, Integer quantidadeDisponivel, String descricao, String cor, List<Fornecedor> fornecedores) {
         this.id = id;
         this.preco = preco;
         this.tipo = tipo;
@@ -42,7 +42,7 @@ public class Material {
         this.quantidadeDisponivel = quantidadeDisponivel;
         this.descricao = descricao;
         this.cor = cor;
-        this.fornecedores = new ArrayList<>();
+        this.fornecedores = fornecedores;
     }
 
 

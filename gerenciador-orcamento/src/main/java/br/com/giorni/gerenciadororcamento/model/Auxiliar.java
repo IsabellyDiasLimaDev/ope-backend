@@ -2,11 +2,14 @@ package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.Default;
+import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -28,5 +31,8 @@ public class Auxiliar {
     @ManyToMany(mappedBy = "auxiliares")
     private List<Servico> servicos;
 
-    public AuxiliarDTO toDto() {return new AuxiliarDTO(this.id, this.telefone, this.nome, this.tipoServico, this.disponbibilidade, this.email);}
+    public AuxiliarDTO toDto() {
+        var servicoDTO = servicos.stream().map(Servico::toDto).collect(Collectors.toList());
+        return new AuxiliarDTO(this.id, this.telefone, this.nome, this.tipoServico, this.disponbibilidade, this.email, servicoDTO);
+    }
 }

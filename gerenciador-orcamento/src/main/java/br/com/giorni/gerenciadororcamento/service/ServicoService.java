@@ -32,8 +32,8 @@ public class ServicoService {
     private MaterialServicoService materialServicoService;
 
     public MaterialServico save(MaterialServicoDTO materialServicoDTO ) {
-        var servico = ServicoMapper.INSTANCE.servicoDtoToServico(materialServicoDTO.getServico());
-        var material = MaterialMapper.INSTANCE.materialDtoToMaterial(materialServicoDTO.getMaterial());
+        var servico = materialServicoDTO.getServico().toEntity();
+        var material = materialServicoDTO.getMaterial().toEntity();
         servico = servicoRepository.save(servico);
         return materialServicoService.save(new MaterialServico(materialServicoDTO.getQuantidadeMaterial(), material, servico));
     }
@@ -41,16 +41,13 @@ public class ServicoService {
     public List<ServicoDTO> findAll() {
         List<Servico> servicos = servicoRepository.findAll();
         return servicos.stream()
-                .map(ServicoMapper.INSTANCE::servicoToServicoDto)
+                .map(Servico::toDto)
                 .collect(Collectors.toList());
     }
 
     public Optional<ServicoDTO> findById(Long id) {
         Optional<Servico> servico = servicoRepository.findById(id);
-        if (servico.isPresent()) {
-            return Optional.of(ServicoMapper.INSTANCE.servicoToServicoDto(servico.get()));
-        }
-        return Optional.empty();
+        return servico.map(ServicoMapper.INSTANCE::servicoToServicoDto);
     }
 
     public Optional<ServicoDTO> update(ServicoDTO servicoDTO) {
