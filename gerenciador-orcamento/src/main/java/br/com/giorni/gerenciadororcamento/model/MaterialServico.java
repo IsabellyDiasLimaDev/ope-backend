@@ -1,6 +1,8 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,8 +10,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="tb_material_servico")
 public class MaterialServico {
 
@@ -20,11 +22,12 @@ public class MaterialServico {
     @Column(name="qtd_material")
     private Integer quantidadeMaterial;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     //@JoinColumn(name = "material_id", referencedColumnName = "id")
     private Material material;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
+    @JsonIgnore
     //@JoinColumn(name = "servico_id", referencedColumnName = "id")
     private Servico servico;
 

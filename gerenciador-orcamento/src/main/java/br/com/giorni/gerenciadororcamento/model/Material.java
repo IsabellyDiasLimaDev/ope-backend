@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "tb_material")
 public class Material {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,6 +26,7 @@ public class Material {
     private Double preco;
     private String tipo;
     private String categoria;
+
     @Column(name = "quantidade_disponivel")
     @JsonProperty("quantidade_disponivel")
     private Integer quantidadeDisponivel;

@@ -6,7 +6,6 @@ import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
 import br.com.giorni.gerenciadororcamento.repository.ServicoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
-import br.com.giorni.gerenciadororcamento.service.dto.ServicoSemMaterialDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.ServicoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ServicoService {
@@ -38,11 +36,8 @@ public class ServicoService {
         return materialServicoService.save(new MaterialServico(materialServicoDTO.getQuantidadeMaterial(), material, servico));
     }
 
-    public List<ServicoDTO> findAll() {
-        List<Servico> servicos = servicoRepository.findAll();
-        return servicos.stream()
-                .map(ServicoMapper.INSTANCE::servicoToServicoDto)
-                .collect(Collectors.toList());
+    public List<Servico> findAll() {
+        return servicoRepository.findAll();
     }
 
     public Optional<ServicoDTO> findById(Long id) {

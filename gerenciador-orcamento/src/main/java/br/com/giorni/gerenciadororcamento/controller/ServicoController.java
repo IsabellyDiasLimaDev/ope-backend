@@ -3,7 +3,6 @@ package br.com.giorni.gerenciadororcamento.controller;
 import br.com.giorni.gerenciadororcamento.model.MaterialServico;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.ServicoService;
-import br.com.giorni.gerenciadororcamento.service.dto.MaterialDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,7 @@ public class ServicoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ServicoDTO>> findAll(){
+    public ResponseEntity<List<Servico>> findAll(){
         return ResponseEntity.ok().body(servicoService.findAll());
     }
 

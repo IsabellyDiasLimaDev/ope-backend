@@ -3,7 +3,9 @@ package br.com.giorni.gerenciadororcamento.model;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoSemMaterialDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -31,26 +33,32 @@ public class Servico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
     @Column(name = "valor_mao_de_obra")
     private Double valorMaoDeObra;
+
     @Column(name = "valor_total")
     private Double valorTotal;
+
     private String descricao;
     @Column(name = "dt_inicial")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dtInicial;
+
     @Column(name = "dt_final")
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dtFinal;
+
     @ManyToMany
     @JoinTable(name = "tb_servico_auxiliar",
             joinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "auxiliar_id", referencedColumnName = "id"))
     private List<Auxiliar> auxiliares;
+
     @ManyToMany
     @JoinTable(name = "tb_servico_orcamento",
             joinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"),
@@ -59,6 +67,7 @@ public class Servico {
 
     //TODO Ajustar para relacionar Serviço com Material
     @OneToMany(mappedBy = "servico", cascade = CascadeType.PERSIST)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<MaterialServico> materiais = new ArrayList<>();
 
     public Servico(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Auxiliar> auxiliares, List<MaterialServico> materiais) {
