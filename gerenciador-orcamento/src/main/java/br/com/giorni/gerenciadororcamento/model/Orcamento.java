@@ -1,10 +1,7 @@
 package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +11,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_orcamento")
 public class Orcamento {
     @Id
@@ -31,14 +30,4 @@ public class Orcamento {
     @ManyToOne
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
-
-    public Orcamento(Long id, String observacoes, String taxaAuxiliar, String valorTotal) {
-        this.id = id;
-        this.observacoes = observacoes;
-        this.taxaAuxiliar = taxaAuxiliar;
-        this.valorTotal = valorTotal;
-        this.servicos = new ArrayList<>();
-    }
-
-    public OrcamentoDTO toDto() {return new OrcamentoDTO(this.id, this.observacoes, this.taxaAuxiliar, this.valorTotal);}
 }

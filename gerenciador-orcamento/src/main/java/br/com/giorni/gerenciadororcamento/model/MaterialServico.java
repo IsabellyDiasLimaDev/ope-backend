@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name="tb_material_servico")
 public class MaterialServico {
 
@@ -23,21 +24,15 @@ public class MaterialServico {
     private Integer quantidadeMaterial;
 
     @ManyToOne()
-    //@JoinColumn(name = "material_id", referencedColumnName = "id")
     private Material material;
 
     @ManyToOne()
     @JsonIgnore
-    //@JoinColumn(name = "servico_id", referencedColumnName = "id")
     private Servico servico;
 
     public MaterialServico(Integer quantidadeMaterial, Material material, Servico servico) {
         this.quantidadeMaterial = quantidadeMaterial;
         this.material = material;
         this.servico = servico;
-    }
-
-    public MaterialServicoDTO toDto(){
-        return new MaterialServicoDTO(this.id, this.quantidadeMaterial, this.material.toDto(), this.servico.toDto());
     }
 }

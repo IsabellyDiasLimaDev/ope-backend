@@ -2,10 +2,7 @@ package br.com.giorni.gerenciadororcamento.model;
 
 
 import br.com.giorni.gerenciadororcamento.service.dto.FornecedorDTO;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +12,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_fornecedor")
 public class Fornecedor {
     @Id
@@ -32,16 +31,4 @@ public class Fornecedor {
             inverseJoinColumns = @JoinColumn(name="material_id", referencedColumnName = "id")
     )
     private List<Material> materiais;
-
-    public Fornecedor(Long id, String nome, String email, String telefone) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.materiais = new ArrayList<>();
-    }
-
-    public FornecedorDTO toDto(){
-        return new FornecedorDTO(this.id,this.nome,this.email,this.telefone);
-    }
 }

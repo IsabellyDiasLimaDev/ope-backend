@@ -2,17 +2,22 @@ package br.com.giorni.gerenciadororcamento.model;
 
 import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.Default;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
-@AllArgsConstructor(onConstructor_ = {@Default})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_auxiliar")
 public class Auxiliar {
     @Id
@@ -26,7 +31,7 @@ public class Auxiliar {
     private boolean disponbibilidade;
     private String email;
     @ManyToMany(mappedBy = "auxiliares")
+    @JsonIgnore
     private List<Servico> servicos;
 
-    public AuxiliarDTO toDto() {return new AuxiliarDTO(this.id, this.telefone, this.nome, this.tipoServico, this.disponbibilidade, this.email);}
 }

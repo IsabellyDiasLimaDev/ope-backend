@@ -11,10 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -26,8 +23,11 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_servico")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,7 +67,6 @@ public class Servico {
 
     //TODO Ajustar para relacionar Serviço com Material
     @OneToMany(mappedBy = "servico", cascade = CascadeType.PERSIST)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<MaterialServico> materiais = new ArrayList<>();
 
     public Servico(Long id, Double valorMaoDeObra, Double valorTotal, String descricao, LocalDate dtInicial, LocalDate dtFinal, List<Auxiliar> auxiliares, List<MaterialServico> materiais) {
@@ -98,16 +97,5 @@ public class Servico {
                 auxiliar.getServicos().add(this);
             }
         }
-    }
-
-    public ServicoDTO toDto() {
-        var materialDTO = materiais.stream().map(MaterialServico::toDto).collect(Collectors.toList());
-        var auxiliarDTO = auxiliares.stream().map(Auxiliar::toDto).collect(Collectors.toList());
-        return new ServicoDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, materialDTO, auxiliarDTO);
-    }
-
-    public ServicoSemMaterialDTO toDtoSemMaterial() {
-        var auxiliarDTO = auxiliares.stream().map(Auxiliar::toDto).collect(Collectors.toList());
-        return new ServicoSemMaterialDTO(this.id, this.valorMaoDeObra, this.valorTotal, this.descricao, this.dtInicial, this.dtFinal, auxiliarDTO);
     }
 }
