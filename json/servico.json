@@ -1,0 +1,12 @@
+{
+     " id":1,
+     " quantidadeDisponivel":5,
+     " valorMaoDeObra":500.00,
+     " valorTotal":2500.00,
+     " descricao":"refrigeracao",
+     " dtInicial": "23-08-2021",
+     " dtFinal":"24-08-2021",
+     "materiais":[],
+     "auxiliares":[],
+     "orcamentos":[]
+}
