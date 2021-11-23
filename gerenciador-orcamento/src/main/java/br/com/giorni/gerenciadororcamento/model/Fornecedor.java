@@ -2,6 +2,7 @@ package br.com.giorni.gerenciadororcamento.model;
 
 
 import br.com.giorni.gerenciadororcamento.service.dto.FornecedorDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,7 +25,7 @@ public class Fornecedor {
     private String nome;
     private String email;
     private String telefone;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name="tb_fornecedor_material",
             joinColumns = @JoinColumn(name="fornecedor_id", referencedColumnName = "id"),
