@@ -7,32 +7,36 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Value;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Value
-@AllArgsConstructor(onConstructor_={@Default})
+@Builder
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ServicoDTO {
 
-    private Long id;
+    Long id;
     @JsonProperty("valor_mao_de_obra")
-    private Double valorMaoDeObra;
+    Double valorMaoDeObra;
     @JsonProperty("valor_total")
-    private Double valorTotal;
-    private String descricao;
+    Double valorTotal;
+    String descricao;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_inicial")
-    private LocalDate dtInicial;
+    LocalDate dtInicial;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_final")
-    private LocalDate dtFinal;
-    //TODO ver como retirar o looping na hora de mostrar os serviços
-    private List<MaterialServicoDTO> materiais;
-    private List<AuxiliarDTO> auxiliares;
+    LocalDate dtFinal;
+    List<MaterialServicoDTO> materiais;
+    List<AuxiliarDTO> auxiliares;
+    List<OrcamentoDTO> orcamentos;
+
 }
