@@ -3,6 +3,7 @@ package br.com.giorni.gerenciadororcamento.model;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Table(name="tb_material_servico")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MaterialServico {
 
     @Id
@@ -27,7 +29,6 @@ public class MaterialServico {
     private Material material;
 
     @ManyToOne()
-    @JsonIgnore
     private Servico servico;
 
     public MaterialServico(Integer quantidadeMaterial, Material material, Servico servico) {

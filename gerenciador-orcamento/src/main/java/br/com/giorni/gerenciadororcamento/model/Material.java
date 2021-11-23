@@ -31,7 +31,6 @@ public class Material {
     private Integer quantidadeDisponivel;
     private String descricao;
     private String cor;
-
     @ManyToMany(mappedBy = "materiais")
     private List<Fornecedor> fornecedores;
 
