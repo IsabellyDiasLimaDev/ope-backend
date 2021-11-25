@@ -6,24 +6,29 @@ import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
-import org.aspectj.weaver.ast.Or;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import br.com.giorni.gerenciadororcamento.service.response.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Component
 public class ServicoMapper {
 
     public static Servico toEntity(ServicoDTO servicoDTO) {
-        List<Auxiliar> auxiliares = AuxiliarMapper.listAuxiliarDtoToListAuxiliar(servicoDTO.getAuxiliares());
-        List<MaterialServico> materiais = MaterialServicoMapper.listMaterialServicoDtoToListMaterialServico(servicoDTO.getMateriais());
-        List<Orcamento> orcamentos = OrcamentoMapper.listOrcamentoDtoToListOrcamento(servicoDTO.getOrcamentos());
+        List<Auxiliar> auxiliares = new ArrayList<>();
+        List<MaterialServico> materiais = new ArrayList<>();
+        List<Orcamento> orcamentos = new ArrayList<>();
+        if (servicoDTO.getAuxiliares() != null) {
+            auxiliares = AuxiliarMapper.listAuxiliarDtoToListAuxiliar(servicoDTO.getAuxiliares());
+        }
+        if (servicoDTO.getMateriais() != null) {
+            materiais = MaterialServicoMapper.listMaterialServicoDtoToListMaterialServico(servicoDTO.getMateriais());
+        }
+        if (servicoDTO.getOrcamentos() != null) {
+            orcamentos = OrcamentoMapper.listOrcamentoDtoToListOrcamento(servicoDTO.getOrcamentos());
+        }
 
         return Servico
                 .builder()
@@ -37,12 +42,23 @@ public class ServicoMapper {
                 .valorMaoDeObra(servicoDTO.getValorMaoDeObra())
                 .valorTotal(servicoDTO.getValorTotal())
                 .build();
+
     }
 
     public static ServicoDTO toDto(Servico servico) {
-        List<AuxiliarDTO> auxiliares = AuxiliarMapper.listAuxiliarToListAuxiliarDto(servico.getAuxiliares());
-        List<MaterialServicoDTO> materiais = MaterialServicoMapper.listMaterialServicoToListMaterialServicoDto(servico.getMateriais());
-        List<OrcamentoDTO> orcamentos = OrcamentoMapper.listOrcamentoToListOrcamentoDto(servico.getOrcamentos());
+        List<AuxiliarDTO> auxiliares = new ArrayList<>();
+        List<MaterialServicoDTO> materiais = new ArrayList<>();
+        List<OrcamentoDTO> orcamentos = new ArrayList<>();
+        if (servico.getAuxiliares() != null) {
+            auxiliares = AuxiliarMapper.listAuxiliarToListAuxiliarDto(servico.getAuxiliares());
+        }
+        if (servico.getMateriais() != null) {
+            materiais = MaterialServicoMapper.listMaterialServicoToListMaterialServicoDto(servico.getMateriais());
+        }
+        if (servico.getOrcamentos() != null) {
+            orcamentos = OrcamentoMapper.listOrcamentoToListOrcamentoDto(servico.getOrcamentos());
+        }
+
         return ServicoDTO
                 .builder()
                 .auxiliares(auxiliares)
@@ -57,17 +73,33 @@ public class ServicoMapper {
                 .build();
     }
 
-    public static List<Servico> listServicoDtoToListServico(List<ServicoDTO> servicoDTOList){
+    public static List<Servico> listServicoDtoToListServico(List<ServicoDTO> servicoDTOList) {
         List<Servico> servicoList = new ArrayList<>();
         if (servicoDTOList.size() > 0)
             servicoDTOList.forEach(servicoDTO -> servicoList.add(ServicoMapper.toEntity(servicoDTO)));
         return servicoList;
     }
 
-    public static List<ServicoDTO> listServicoToListServicoDto(List<Servico> servicoList){
+    public static List<ServicoDTO> listServicoToListServicoDto(List<Servico> servicoList) {
         List<ServicoDTO> servicoDTOList = new ArrayList<>();
         if (servicoList.size() > 0) servicoList.forEach(servico -> servicoDTOList.add(ServicoMapper.toDto(servico)));
         return servicoDTOList;
+    }
+
+    public static ServicoResponse toResponse(Servico servico,
+                                             List<MaterialServicoSemServicoResponse> materialServico,
+                                             List<AuxiliarSemServicoResponse> auxiliares){
+        return ServicoResponse
+                .builder()
+                .id(servico.getId())
+                .descricao(servico.getDescricao())
+                .dtFinal(servico.getDtFinal())
+                .dtInicial(servico.getDtInicial())
+                .materiais(materialServico)
+                .auxiliares(auxiliares)
+                .valorMaoDeObra(servico.getValorMaoDeObra())
+                .valorTotal(servico.getValorTotal())
+                .build();
     }
 
 }
