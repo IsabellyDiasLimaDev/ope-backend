@@ -1,10 +1,13 @@
 package br.com.giorni.gerenciadororcamento.service.mapper;
 
+import br.com.giorni.gerenciadororcamento.model.Cliente;
 import br.com.giorni.gerenciadororcamento.model.MaterialServico;
 import br.com.giorni.gerenciadororcamento.model.Orcamento;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.response.OrcamentoResponse;
+import br.com.giorni.gerenciadororcamento.service.response.ServicoResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,13 +18,28 @@ import java.util.stream.Collectors;
 public class OrcamentoMapper {
 
     public static Orcamento toEntity(OrcamentoDTO orcamentoDTO) {
+       List<Servico> servicos = new ArrayList<>();
+       if (orcamentoDTO.getServicos() != null){
+           ServicoMapper.listServicoDtoToListServico(orcamentoDTO.getServicos());
+       }
         return Orcamento
                 .builder()
+                .id(orcamentoDTO.getId())
+                .observacoes(orcamentoDTO.getObservacoes())
+                .servicos(servicos)
+                .cliente(ClienteMapper.toEntity(orcamentoDTO.getCliente()))
+                .taxaAuxiliar(orcamentoDTO.getTaxaAuxiliar())
+                .valorTotal(orcamentoDTO.getValorTotal())
                 .build();
     }
 
     public static OrcamentoDTO toDto(Orcamento orcamento) {
-        return OrcamentoDTO.builder().build();
+
+        return OrcamentoDTO
+                .builder()
+                .id(orcamento.getId())
+                .cliente(ClienteMapper.toDto(orcamento.getCliente()))
+                .build();
     }
 
     public static List<Orcamento> listOrcamentoDtoToListOrcamento(List<OrcamentoDTO> orcamentoDTOList) {
@@ -35,6 +53,17 @@ public class OrcamentoMapper {
         if (orcamentoList.size() > 0)
             orcamentoList.forEach(orcamento -> orcamentoDTOList.add(OrcamentoMapper.toDto(orcamento)));
         return orcamentoDTOList;
+    }
+
+    public static OrcamentoResponse toResponse(Orcamento orcamento, List<ServicoResponse> servicoResponse){
+        return OrcamentoResponse.builder()
+                .id(orcamento.getId())
+                .cliente(ClienteMapper.toResponseSemOrcamento(orcamento.getCliente()))
+                .observacoes(orcamento.getObservacoes())
+                .servicos(servicoResponse)
+                .taxaAuxiliar(orcamento.getTaxaAuxiliar())
+                .valorTotal(orcamento.getValorTotal())
+                .build();
     }
 
 }
