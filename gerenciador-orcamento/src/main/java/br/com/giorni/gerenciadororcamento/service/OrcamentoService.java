@@ -1,6 +1,7 @@
 package br.com.giorni.gerenciadororcamento.service;
 
 import br.com.giorni.gerenciadororcamento.model.Orcamento;
+import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.AuxiliarMapper;
@@ -43,7 +44,7 @@ public class OrcamentoService {
                     if (servico.getMateriais().size() > 0) {
                         servico.getMateriais().forEach(materialServico -> materiais.add(MaterialServicoMapper.toResponse(materialServico)));
                     }
-                    if(servico.getAuxiliares().size() > 0){
+                    if (servico.getAuxiliares().size() > 0) {
                         servico.getAuxiliares().forEach(auxiliar -> auxiliares.add(AuxiliarMapper.toResponseSemServico(auxiliar)));
                     }
                     servicoResponse.add(ServicoMapper.toResponse(servico, materiais, auxiliares));
@@ -51,7 +52,7 @@ public class OrcamentoService {
             }
             orcamentoResponse.add(OrcamentoMapper.toResponse(orcamento, servicoResponse));
         });
-       return orcamentoResponse;
+        return orcamentoResponse;
     }
 
     public Optional<OrcamentoResponse> findById(Long id) {
@@ -67,7 +68,7 @@ public class OrcamentoService {
                     if (servico.getMateriais().size() > 0) {
                         servico.getMateriais().forEach(materialServico -> materiais.add(MaterialServicoMapper.toResponse(materialServico)));
                     }
-                    if(servico.getAuxiliares().size() > 0){
+                    if (servico.getAuxiliares().size() > 0) {
                         servico.getAuxiliares().forEach(auxiliar -> auxiliares.add(AuxiliarMapper.toResponseSemServico(auxiliar)));
                     }
                     servicoResponse.add(ServicoMapper.toResponse(servico, materiais, auxiliares));
@@ -93,7 +94,7 @@ public class OrcamentoService {
                 if (servico.getMateriais().size() > 0) {
                     servico.getMateriais().forEach(materialServico -> materiais.add(MaterialServicoMapper.toResponse(materialServico)));
                 }
-                if(servico.getAuxiliares().size() > 0){
+                if (servico.getAuxiliares().size() > 0) {
                     servico.getAuxiliares().forEach(auxiliar -> auxiliares.add(AuxiliarMapper.toResponseSemServico(auxiliar)));
                 }
                 servicoResponse.add(ServicoMapper.toResponse(servico, materiais, auxiliares));
@@ -111,5 +112,15 @@ public class OrcamentoService {
             return true;
         }
         return false;
+    }
+
+    public Orcamento calcularValorTotalOrcamento(Orcamento orcamento) {
+        var valorTotalServicos = 0.0;
+        for (Servico servico : orcamento.getServicos()) {
+            valorTotalServicos += servico.getValorTotal();
+        }
+        valorTotalServicos += (valorTotalServicos * orcamento.getTaxaAuxiliar());
+        orcamento.setValorTotal(valorTotalServicos);
+        return orcamento;
     }
 }
