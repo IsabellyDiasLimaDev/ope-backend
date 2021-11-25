@@ -1,5 +1,6 @@
 package br.com.giorni.gerenciadororcamento.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
