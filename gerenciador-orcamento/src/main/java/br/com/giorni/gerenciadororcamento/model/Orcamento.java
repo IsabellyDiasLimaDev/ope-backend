@@ -22,12 +22,15 @@ public class Orcamento {
     private Long id;
     private String observacoes;
     @Column(name = "taxa_auxiliar")
-    private String taxaAuxiliar;
+    private Double taxaAuxiliar;
     @Column(name = "valor_total")
-    private String valorTotal;
-    @ManyToMany(mappedBy = "orcamentos")
+    private Double valorTotal;
+    @ManyToMany
+    @JoinTable(name = "tb_servico_orcamento",
+            joinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"))
     private List<Servico> servicos;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 }

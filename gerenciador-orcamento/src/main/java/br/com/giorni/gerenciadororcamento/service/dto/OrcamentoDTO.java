@@ -12,8 +12,8 @@ import java.util.List;
 public class OrcamentoDTO {
     Long id;
     String observacoes;
-    String taxaAuxiliar;
-    String valorTotal;
+    Double taxaAuxiliar;
+    Double valorTotal;
     List<ServicoDTO> servicos;
     ClienteDTO cliente;
 }
