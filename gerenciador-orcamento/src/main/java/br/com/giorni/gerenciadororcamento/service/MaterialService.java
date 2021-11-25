@@ -63,17 +63,12 @@ public class MaterialService {
     public MaterialResponse update(MaterialDTO materialDTO){
         Material material = MaterialMapper.toEntity(materialDTO);
         material = materialRepository.save(material);
-        MaterialResponse materialResponse = new MaterialResponse();
+        List<FornecedorSemMaterialResponse> fornecedorSemMaterialResponseList = new ArrayList<>();
         if (material.getFornecedores().size() > 0){
-            List<FornecedorSemMaterialResponse> fornecedorSemMaterialResponseList = new ArrayList<>();
             material.getFornecedores().forEach(fornecedor -> fornecedorSemMaterialResponseList.add(FornecedorMapper.toResponseSemMaterial(fornecedor)));
-            materialResponse = MaterialMapper.toResponse(material, fornecedorSemMaterialResponseList);
+
         }
-        else
-        {
-            materialResponse = MaterialMapper.toResponse(material, new ArrayList<>());
-        }
-        return  materialResponse;
+        return MaterialMapper.toResponse(material, fornecedorSemMaterialResponseList);
     }
 
     public boolean delete(Long id) {

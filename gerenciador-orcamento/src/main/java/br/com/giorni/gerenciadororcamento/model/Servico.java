@@ -59,10 +59,7 @@ public class Servico {
             inverseJoinColumns = @JoinColumn(name = "auxiliar_id", referencedColumnName = "id"))
     private List<Auxiliar> auxiliares;
 
-    @ManyToMany
-    @JoinTable(name = "tb_servico_orcamento",
-            joinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "servicos")
     private List<Orcamento> orcamentos;
 
     //TODO Ajustar para relacionar Serviço com Material
