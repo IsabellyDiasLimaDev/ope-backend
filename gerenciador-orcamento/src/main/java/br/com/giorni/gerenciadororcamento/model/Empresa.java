@@ -24,6 +24,4 @@ public class Empresa {
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
-    public EmpresaDTO toDto() { return new EmpresaDTO(this.id, this.nomeFantasia, this.endereco.toDto());}
-
 }

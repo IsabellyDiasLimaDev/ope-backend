@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//TODO - TRANSFORMAR PARA UM AUXILIAR COM UMA LISTA DE SERVICOS - PENSAR NA MELHOR MANEIRA PARA N HAVER REDUNDANCIA
-public class AuxiliarResponse {
+public class AuxiliarSemServicoResponse {
     private Long id;
     private String telefone;
     private String nome;

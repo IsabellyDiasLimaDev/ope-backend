@@ -3,6 +3,7 @@ package br.com.giorni.gerenciadororcamento.service.mapper;
 import br.com.giorni.gerenciadororcamento.model.Auxiliar;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
+import br.com.giorni.gerenciadororcamento.service.response.AuxiliarSemServicoResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class AuxiliarMapper {
     }
 
     public static AuxiliarDTO toDto(Auxiliar auxiliar){
+        //TODO - fazer o mesmo esquema do toEntity com a lista de servicos
         return AuxiliarDTO
                 .builder()
                 .id(auxiliar.getId())
@@ -60,6 +62,18 @@ public class AuxiliarMapper {
         List<AuxiliarDTO> auxiliarDTOList = new ArrayList<>();
         if (auxiliarList.size() > 0) auxiliarList.forEach(auxiliar -> auxiliarDTOList.add(AuxiliarMapper.toDto(auxiliar)));
         return auxiliarDTOList;
+    }
+
+    public static AuxiliarSemServicoResponse toResponseSemServico(Auxiliar auxiliar){
+        return AuxiliarSemServicoResponse
+                .builder()
+                .id(auxiliar.getId())
+                .disponbibilidade(auxiliar.isDisponbibilidade())
+                .email(auxiliar.getEmail())
+                .nome(auxiliar.getNome())
+                .telefone(auxiliar.getTelefone())
+                .tipoServico(auxiliar.getTipoServico())
+                .build();
     }
 
 }
