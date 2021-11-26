@@ -48,4 +48,9 @@ public class ServicoController {
         boolean deletou = servicoService.delete(id);
         return deletou ? ResponseEntity.ok().body("Serviço removido com sucesso") : ResponseEntity.notFound().build();
     }
+
+    @GetMapping(path = "/calcularValorTotalServico/{id}")
+    public Double calcularValorTotalServico(@PathVariable Long id){
+        return servicoService.calcularValorTotalServico(id);
+    }
 }

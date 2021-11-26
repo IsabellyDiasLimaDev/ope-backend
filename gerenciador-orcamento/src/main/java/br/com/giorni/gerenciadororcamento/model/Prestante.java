@@ -1,16 +1,15 @@
 package br.com.giorni.gerenciadororcamento.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_prestante")
 public class Prestante {
 

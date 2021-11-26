@@ -5,13 +5,11 @@ import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
 import br.com.giorni.gerenciadororcamento.repository.ServicoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
-import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.AuxiliarMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialServicoMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.ServicoMapper;
 import br.com.giorni.gerenciadororcamento.service.response.AuxiliarSemServicoResponse;
-import br.com.giorni.gerenciadororcamento.service.response.MaterialSemFornecedorResponse;
 import br.com.giorni.gerenciadororcamento.service.response.MaterialServicoSemServicoResponse;
 import br.com.giorni.gerenciadororcamento.service.response.ServicoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,9 @@ public class ServicoService {
         var servico = ServicoMapper.toEntity(materialServicoDTO.getServico());
         var material = MaterialMapper.toEntity(materialServicoDTO.getMaterial());
         servico = servicoRepository.save(servico);
-        return materialServicoService.save(new MaterialServico(materialServicoDTO.getQuantidadeMaterial(), material, servico));
+        var materialServico =  new MaterialServico(materialServicoDTO.getQuantidadeMaterial(), material, servico);
+        materialServico.AtualizarQuantidadeMaterial();
+        return materialServicoService.save(materialServico);
     }
 
     public List<ServicoResponse> findAll() {
@@ -88,5 +88,19 @@ public class ServicoService {
             return true;
         }
         return false;
+    }
+
+    public Double calcularValorTotalServico(Long id){
+        Optional<Servico> servico = servicoRepository.findById(id);
+        List<Double> valorTotalMateriaisList = new ArrayList<>();
+        var valorTotalMateriais = 0.0;
+        servico.get().getMateriais().forEach(materialServico -> {
+            var valorTotalMaterial = materialServico.getMaterial().getPreco() * materialServico.getQuantidadeMaterial();
+            valorTotalMateriaisList.add(valorTotalMaterial);
+        });
+        for (Double valor : valorTotalMateriaisList) {
+            valorTotalMateriais += valor;
+        }
+        return valorTotalMateriais + servico.get().getValorMaoDeObra();
     }
 }

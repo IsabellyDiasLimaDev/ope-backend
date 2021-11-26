@@ -114,13 +114,13 @@ public class OrcamentoService {
         return false;
     }
 
-    public Orcamento calcularValorTotalOrcamento(Orcamento orcamento) {
+    public Double calcularValorTotalOrcamento(Long id) {
+        Orcamento orcamento = orcamentoRepository.findById(id).get();
         var valorTotalServicos = 0.0;
         for (Servico servico : orcamento.getServicos()) {
             valorTotalServicos += servico.getValorTotal();
         }
         valorTotalServicos += (valorTotalServicos * orcamento.getTaxaAuxiliar());
-        orcamento.setValorTotal(valorTotalServicos);
-        return orcamento;
+        return valorTotalServicos;
     }
 }
