@@ -25,13 +25,17 @@ public class Material {
     private Double preco;
     private String tipo;
     private String categoria;
-
     @Column(name = "quantidade_disponivel")
     @JsonProperty("quantidade_disponivel")
     private Integer quantidadeDisponivel;
     private String descricao;
     private String cor;
-    @ManyToMany(mappedBy = "materiais")
+    @ManyToMany
+    @JoinTable(
+            name="tb_material_fornecedor",
+            joinColumns = @JoinColumn(name="material_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name="fornecedor_id", referencedColumnName = "id")
+    )
     private List<Fornecedor> fornecedores;
 
 

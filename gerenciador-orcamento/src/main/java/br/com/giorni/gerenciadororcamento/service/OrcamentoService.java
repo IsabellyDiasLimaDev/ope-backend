@@ -4,6 +4,7 @@ import br.com.giorni.gerenciadororcamento.model.Orcamento;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.AuxiliarMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialServicoMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.OrcamentoMapper;
