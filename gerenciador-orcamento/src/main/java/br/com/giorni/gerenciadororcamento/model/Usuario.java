@@ -5,8 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Data
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_usuario")
 public class Usuario {
 
