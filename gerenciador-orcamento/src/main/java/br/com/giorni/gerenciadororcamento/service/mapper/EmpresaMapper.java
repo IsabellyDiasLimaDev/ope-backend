@@ -38,6 +38,7 @@ public class EmpresaMapper {
                 .nomeFantasia(empresa.getNomeFantasia())
                 .endereco(EnderecoDTO
                         .builder()
+                        .numero(empresa.getEndereco().getNumero())
                         .bairro(empresa.getEndereco().getBairro())
                         .cep(empresa.getEndereco().getCep())
                         .cidade(empresa.getEndereco().getCidade())
