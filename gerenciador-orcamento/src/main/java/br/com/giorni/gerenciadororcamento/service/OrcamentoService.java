@@ -14,6 +14,7 @@ import br.com.giorni.gerenciadororcamento.service.response.AuxiliarSemServicoRes
 import br.com.giorni.gerenciadororcamento.service.response.MaterialServicoSemServicoResponse;
 import br.com.giorni.gerenciadororcamento.service.response.OrcamentoResponse;
 import br.com.giorni.gerenciadororcamento.service.response.ServicoResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class OrcamentoService {
 
@@ -37,11 +39,13 @@ public class OrcamentoService {
             orcamento = orcamentoRepository.save(orcamento);
             for (Servico servico :
                     orcamento.getServicos()) {
+                log.error("{}", servico.getMateriais());
                 servico.adicionarOrcamento(orcamento);
                 servicoRepository.save(servico);
             }
             return true;
         }catch (Exception e){
+            e.printStackTrace();
          return false;
         }
     }
@@ -127,15 +131,5 @@ public class OrcamentoService {
             return true;
         }
         return false;
-    }
-
-    public Double calcularValorTotalOrcamento(Long id) {
-        Orcamento orcamento = orcamentoRepository.findById(id).get();
-        var valorTotalServicos = 0.0;
-        for (Servico servico : orcamento.getServicos()) {
-            valorTotalServicos += servico.getValorTotal();
-        }
-        valorTotalServicos += (valorTotalServicos * orcamento.getTaxaAuxiliar());
-        return valorTotalServicos;
     }
 }

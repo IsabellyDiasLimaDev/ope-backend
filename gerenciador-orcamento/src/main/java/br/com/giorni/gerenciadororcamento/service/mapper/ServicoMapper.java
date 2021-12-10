@@ -2,10 +2,7 @@ package br.com.giorni.gerenciadororcamento.service.mapper;
 
 
 import br.com.giorni.gerenciadororcamento.model.*;
-import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
-import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
-import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
-import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.*;
 import br.com.giorni.gerenciadororcamento.service.response.*;
 import org.springframework.stereotype.Component;
 
@@ -99,6 +96,30 @@ public class ServicoMapper {
                 .auxiliares(auxiliares)
                 .valorMaoDeObra(servico.getValorMaoDeObra())
                 .valorTotal(servico.getValorTotal())
+                .build();
+    }
+
+    public static ServicoSemMaterialDTO toDtoSemMaterial(Servico servico){
+        List<AuxiliarDTO> auxiliarDTOList = new ArrayList<>();
+        servico.getAuxiliares().forEach(auxiliar -> {
+            auxiliarDTOList.add(AuxiliarDTO
+                    .builder()
+                            .tipoServico(auxiliar.getTipoServico())
+                            .email(auxiliar.getEmail())
+                            .nome(auxiliar.getNome())
+                            .id(auxiliar.getId())
+                            .telefone(auxiliar.getTelefone())
+                    .build());
+        });
+        return ServicoSemMaterialDTO
+                .builder()
+                .id(servico.getId())
+                .descricao(servico.getDescricao())
+                .dtFinal(servico.getDtFinal())
+                .dtInicial(servico.getDtInicial())
+                .valorTotal(servico.getValorTotal())
+                .valorMaoDeObra(servico.getValorMaoDeObra())
+                .auxiliares(auxiliarDTOList)
                 .build();
     }
 

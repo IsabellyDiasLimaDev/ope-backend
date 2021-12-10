@@ -21,8 +21,6 @@ public class Orcamento {
     @Column(name = "id", nullable = false)
     private Long id;
     private String observacoes;
-    @Column(name = "taxa_auxiliar")
-    private Double taxaAuxiliar;
     @Column(name = "valor_total")
     private Double valorTotal;
     @ManyToMany
@@ -30,7 +28,7 @@ public class Orcamento {
             joinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"))
     private List<Servico> servicos;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 

@@ -5,6 +5,7 @@ import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.ServicoService;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoSemMaterialDTO;
 import br.com.giorni.gerenciadororcamento.service.response.ServicoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class ServicoController {
     @GetMapping
     public ResponseEntity<List<ServicoResponse>> findAll(){
         return ResponseEntity.ok().body(servicoService.findAll());
+    }
+
+    @GetMapping(path = "/semmaterial")
+    public ResponseEntity<List<ServicoSemMaterialDTO>> findAllWithoutMaterial(){
+        return ResponseEntity.ok().body(servicoService.findAllWithoutMaterial());
     }
 
     @GetMapping(path = {"/{id}"})

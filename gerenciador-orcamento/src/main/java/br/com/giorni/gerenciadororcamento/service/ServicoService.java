@@ -1,11 +1,15 @@
 package br.com.giorni.gerenciadororcamento.service;
 
+import br.com.giorni.gerenciadororcamento.model.Auxiliar;
 import br.com.giorni.gerenciadororcamento.model.MaterialServico;
 import br.com.giorni.gerenciadororcamento.model.Servico;
+import br.com.giorni.gerenciadororcamento.repository.AuxiliarRepository;
+import br.com.giorni.gerenciadororcamento.repository.MaterialRepository;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
 import br.com.giorni.gerenciadororcamento.repository.ServicoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoSemMaterialDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.AuxiliarMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialServicoMapper;
@@ -32,6 +36,12 @@ public class ServicoService {
     private OrcamentoRepository orcamentoRepository;
 
     @Autowired
+    private AuxiliarRepository auxiliarRepository;
+
+    @Autowired
+    private MaterialRepository materialRepository;
+
+    @Autowired
     private MaterialService materialService;
 
     @Autowired
@@ -39,12 +49,18 @@ public class ServicoService {
 
     public boolean save(ServicoDTO servicoDTO) {
         var servico = ServicoMapper.toEntity(servicoDTO);
+        for (Auxiliar auxiliar:
+             servico.getAuxiliares()) {
+            auxiliar.setDisponibilidade(false);
+            auxiliarRepository.save(auxiliar);
+        }
         servico = servicoRepository.save(servico);
        try{
            for (MaterialServico materialServico:
                    servico.getMateriais()) {
                materialServico.setServico(servico);
                materialServico.AtualizarQuantidadeMaterial();
+               materialRepository.save(materialServico.getMaterial());
                materialServicoService.save(materialServico);
            }
            return true;
@@ -71,6 +87,15 @@ public class ServicoService {
             servicoResponse.add(ServicoMapper.toResponse(servico, materiais, auxiliares));
         });
         return servicoResponse;
+    }
+
+    public List<ServicoSemMaterialDTO> findAllWithoutMaterial(){
+        List<Servico> servicos = servicoRepository.findAll();
+        List<ServicoSemMaterialDTO> servicoSemMaterial = new ArrayList<>();
+        servicos.forEach(servico -> {
+            servicoSemMaterial.add(ServicoMapper.toDtoSemMaterial(servico));
+        });
+         return servicoSemMaterial;
     }
 
     public Optional<ServicoResponse> findById(Long id) {

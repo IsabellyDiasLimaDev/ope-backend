@@ -49,9 +49,4 @@ public class OrcamentoController {
         return deletou ? ResponseEntity.ok().body("Orcamento removido com sucesso") : ResponseEntity.notFound().build();
     }
 
-    @GetMapping(path = "/calcularValorTotalOrcamento/{id}")
-    public Double calcularValorTotalOrcamento(@PathVariable Long id){
-        return orcamentoService.calcularValorTotalOrcamento(id);
-    }
-
 }
