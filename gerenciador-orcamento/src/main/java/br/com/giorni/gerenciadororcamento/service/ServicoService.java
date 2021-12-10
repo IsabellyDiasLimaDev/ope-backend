@@ -5,6 +5,7 @@ import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
 import br.com.giorni.gerenciadororcamento.repository.ServicoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.AuxiliarMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialServicoMapper;
@@ -12,6 +13,7 @@ import br.com.giorni.gerenciadororcamento.service.mapper.ServicoMapper;
 import br.com.giorni.gerenciadororcamento.service.response.AuxiliarSemServicoResponse;
 import br.com.giorni.gerenciadororcamento.service.response.MaterialServicoSemServicoResponse;
 import br.com.giorni.gerenciadororcamento.service.response.ServicoResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ServicoService {
 
@@ -34,13 +37,23 @@ public class ServicoService {
     @Autowired
     private MaterialServicoService materialServicoService;
 
-    public MaterialServico save(MaterialServicoDTO materialServicoDTO) {
-        var servico = ServicoMapper.toEntity(materialServicoDTO.getServico());
-        var material = MaterialMapper.toEntity(materialServicoDTO.getMaterial());
+    public boolean save(ServicoDTO servicoDTO) {
+        var servico = ServicoMapper.toEntity(servicoDTO);
         servico = servicoRepository.save(servico);
-        var materialServico =  new MaterialServico(materialServicoDTO.getQuantidadeMaterial(), material, servico);
-        materialServico.AtualizarQuantidadeMaterial();
-        return materialServicoService.save(materialServico);
+       try{
+           for (MaterialServico materialServico:
+                   servico.getMateriais()) {
+               materialServico.setServico(servico);
+               materialServico.AtualizarQuantidadeMaterial();
+               materialServicoService.save(materialServico);
+           }
+           return true;
+       }catch (Exception e){
+           return false;
+       }
+
+
+
     }
 
     public List<ServicoResponse> findAll() {

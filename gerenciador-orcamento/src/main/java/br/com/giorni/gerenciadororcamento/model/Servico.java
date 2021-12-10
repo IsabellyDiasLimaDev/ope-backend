@@ -62,7 +62,7 @@ public class Servico {
     @ManyToMany(mappedBy = "servicos")
     private List<Orcamento> orcamentos;
 
-    //TODO Ajustar para relacionar Serviço com Material
+
     @OneToMany(mappedBy = "servico", cascade = CascadeType.PERSIST)
     private List<MaterialServico> materiais = new ArrayList<>();
 
@@ -92,6 +92,23 @@ public class Servico {
 
             if (!auxiliar.getServicos().contains(this)) {
                 auxiliar.getServicos().add(this);
+            }
+        }
+    }
+
+    public List<Orcamento> getOrcamentos() {
+        if(orcamentos == null) {
+            orcamentos = new ArrayList<>();
+        }
+        return orcamentos;
+    }
+
+    public void adicionarOrcamento(Orcamento orcamento) {
+        if(orcamento != null && !getOrcamentos().contains(orcamento)) {
+            getOrcamentos().add(orcamento);
+
+            if(!orcamento.getServicos().contains(this)) {
+                orcamento.getServicos().add(this);
             }
         }
     }

@@ -35,6 +35,7 @@ public class ServicoDTO {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty("dt_final")
     LocalDate dtFinal;
+    @JsonProperty("material_servico")
     List<MaterialServicoDTO> materiais;
     List<AuxiliarDTO> auxiliares;
     List<OrcamentoDTO> orcamentos;

@@ -88,7 +88,7 @@ public class ServicoMapper {
 
     public static ServicoResponse toResponse(Servico servico,
                                              List<MaterialServicoSemServicoResponse> materialServico,
-                                             List<AuxiliarSemServicoResponse> auxiliares){
+                                             List<AuxiliarSemServicoResponse> auxiliares) {
         return ServicoResponse
                 .builder()
                 .id(servico.getId())

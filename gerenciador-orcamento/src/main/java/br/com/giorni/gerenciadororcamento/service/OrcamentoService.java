@@ -3,6 +3,7 @@ package br.com.giorni.gerenciadororcamento.service;
 import br.com.giorni.gerenciadororcamento.model.Orcamento;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
+import br.com.giorni.gerenciadororcamento.repository.ServicoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.AuxiliarMapper;
@@ -27,9 +28,22 @@ public class OrcamentoService {
     @Autowired
     private OrcamentoRepository orcamentoRepository;
 
-    public Orcamento save(OrcamentoDTO orcamentoDTO) {
-        Orcamento orcamento = OrcamentoMapper.toEntity(orcamentoDTO);
-        return orcamentoRepository.save(orcamento);
+    @Autowired
+    private ServicoRepository servicoRepository;
+
+    public boolean save(OrcamentoDTO orcamentoDTO) {
+        try {
+            Orcamento orcamento = OrcamentoMapper.toEntity(orcamentoDTO);
+            orcamento = orcamentoRepository.save(orcamento);
+            for (Servico servico :
+                    orcamento.getServicos()) {
+                servico.adicionarOrcamento(orcamento);
+                servicoRepository.save(servico);
+            }
+            return true;
+        }catch (Exception e){
+         return false;
+        }
     }
 
     public List<OrcamentoResponse> findAll() {

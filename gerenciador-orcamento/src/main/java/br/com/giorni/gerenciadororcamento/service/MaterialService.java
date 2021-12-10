@@ -32,7 +32,6 @@ public class MaterialService {
 
     public Boolean save(MaterialDTO materialDTO) {
         Material material = MaterialMapper.toEntity(materialDTO);
-        log.info("fornecedores {}", material);
         material = materialRepository.save(material);
         for (Fornecedor fornecedor :
                 material.getFornecedores()) {

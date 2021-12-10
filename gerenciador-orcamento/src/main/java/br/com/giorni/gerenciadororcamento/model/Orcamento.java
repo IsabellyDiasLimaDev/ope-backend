@@ -33,4 +33,21 @@ public class Orcamento {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
+
+    public List<Servico> getServicos() {
+        if(servicos == null) {
+            servicos = new ArrayList<>();
+        }
+        return servicos;
+    }
+
+    public void adicionarServico(Servico servico) {
+        if(servico != null && !getServicos().contains(servico)) {
+            getServicos().add(servico);
+
+            if(!servico.getOrcamentos().contains(this)) {
+                servico.getOrcamentos().add(this);
+            }
+        }
+    }
 }

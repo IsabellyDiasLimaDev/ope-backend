@@ -22,8 +22,8 @@ public class ServicoController {
     private ServicoService servicoService;
 
     @PostMapping
-    public MaterialServico createServiceWithMaterial(@RequestBody MaterialServicoDTO materialServicoDTO){
-        return servicoService.save(materialServicoDTO);
+    public boolean createServiceWithMaterial(@RequestBody ServicoDTO servicoDTO){
+        return servicoService.save(servicoDTO);
     }
 
     @GetMapping
