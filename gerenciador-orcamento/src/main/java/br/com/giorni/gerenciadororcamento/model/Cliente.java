@@ -1,6 +1,5 @@
 package br.com.giorni.gerenciadororcamento.model;
 
-import br.com.giorni.gerenciadororcamento.service.dto.ClienteDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,7 +22,7 @@ public class Cliente {
     private String tipoCliente;
     private String email;
     private String nome;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
     @OneToMany(mappedBy = "cliente")

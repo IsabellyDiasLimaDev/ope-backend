@@ -23,14 +23,10 @@ public class EmpresaService {
     private EnderecoRepository enderecoRepository;
 
     @Autowired
-    private EnderecoService enderedoService;
-
-    //TODO Ajustar métodos de CRUD da Empresa
+    private EnderecoService enderecoService;
 
     public Empresa save(EmpresaDTO empresaDTO) {
         Empresa empresa = EmpresaMapper.toEntity(empresaDTO);
-        var endereco = EnderecoMapper.toEntity(empresaDTO.getEndereco());
-        enderecoRepository.save(endereco);
         return empresaRepository.save(empresa);
     }
 

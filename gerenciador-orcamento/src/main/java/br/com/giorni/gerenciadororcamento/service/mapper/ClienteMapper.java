@@ -59,6 +59,7 @@ public class ClienteMapper {
                 .orcamentos(orcamentos)
                 .endereco(EnderecoDTO
                         .builder()
+                        .numero(cliente.getEndereco().getNumero())
                         .bairro(cliente.getEndereco().getBairro())
                         .cep(cliente.getEndereco().getCep())
                         .cidade(cliente.getEndereco().getCidade())

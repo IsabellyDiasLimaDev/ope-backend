@@ -18,7 +18,7 @@ public class Empresa {
     private Long id;
     @Column(name = "nome_fantasia")
     private String nomeFantasia;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 

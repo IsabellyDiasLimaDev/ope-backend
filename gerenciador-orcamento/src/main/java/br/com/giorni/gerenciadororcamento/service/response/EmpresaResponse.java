@@ -1,6 +1,5 @@
 package br.com.giorni.gerenciadororcamento.service.response;
 
-import br.com.giorni.gerenciadororcamento.model.Endereco;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
