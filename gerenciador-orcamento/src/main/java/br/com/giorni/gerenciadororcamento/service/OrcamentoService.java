@@ -35,14 +35,18 @@ public class OrcamentoService {
 
     public boolean save(OrcamentoDTO orcamentoDTO) {
         try {
+            System.out.println(orcamentoDTO.getServicos());
             Orcamento orcamento = OrcamentoMapper.toEntity(orcamentoDTO);
-            orcamento = orcamentoRepository.save(orcamento);
+            System.out.println(orcamento.getServicos());
             for (Servico servico :
                     orcamento.getServicos()) {
-                log.error("{}", servico.getMateriais());
-                servico.adicionarOrcamento(orcamento);
-                servicoRepository.save(servico);
+                orcamento.adicionarServico(servico);
+                var servico2 = servicoRepository.save(servico);
+                orcamento = orcamentoRepository.save(orcamento);
+                System.out.println(servico2.getOrcamentos());
+                System.out.println(orcamento.getServicos());
             }
+
             return true;
         }catch (Exception e){
             e.printStackTrace();
