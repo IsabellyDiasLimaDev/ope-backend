@@ -41,7 +41,7 @@ public class OrcamentoService {
             for (Servico servico :
                     orcamento.getServicos()) {
                 orcamento.adicionarServico(servico);
-                var servico2 = servicoRepository.save(servico);
+                Servico servico2 = servicoRepository.save(servico);
                 orcamento = orcamentoRepository.save(orcamento);
                 System.out.println(servico2.getOrcamentos());
                 System.out.println(orcamento.getServicos());
@@ -80,7 +80,7 @@ public class OrcamentoService {
 
     public Optional<OrcamentoResponse> findById(Long id) {
         Optional<Orcamento> orcamentoOptional = orcamentoRepository.findById(id);
-        var orcamentoResponse = new OrcamentoResponse();
+        OrcamentoResponse orcamentoResponse = new OrcamentoResponse();
         List<ServicoResponse> servicoResponse = new ArrayList<>();
         List<MaterialServicoSemServicoResponse> materiais = new ArrayList<>();
         List<AuxiliarSemServicoResponse> auxiliares = new ArrayList<>();
@@ -107,7 +107,7 @@ public class OrcamentoService {
         Orcamento orcamento = OrcamentoMapper.toEntity(orcamentoDTO);
         orcamento = orcamentoRepository.save(orcamento);
 
-        var orcamentoResponse = new OrcamentoResponse();
+        OrcamentoResponse orcamentoResponse = new OrcamentoResponse();
         List<ServicoResponse> servicoResponse = new ArrayList<>();
         List<MaterialServicoSemServicoResponse> materiais = new ArrayList<>();
         List<AuxiliarSemServicoResponse> auxiliares = new ArrayList<>();

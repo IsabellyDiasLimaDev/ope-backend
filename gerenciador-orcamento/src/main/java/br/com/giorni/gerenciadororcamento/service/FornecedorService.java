@@ -66,7 +66,7 @@ public class FornecedorService {
     public FornecedorResponse update(FornecedorDTO fornecedorDTO){
         Fornecedor fornecedor = FornecedorMapper.toEntity(fornecedorDTO);
         fornecedor = fornecedorRepository.save(fornecedor);
-        var fornecedorResponse = new FornecedorResponse();
+        FornecedorResponse fornecedorResponse = new FornecedorResponse();
             if (fornecedor.getMateriais().size() > 0){
                 List<MaterialSemFornecedorResponse> materialSemFornecedorResponseList = new ArrayList<>();
                 fornecedor.getMateriais().forEach(material -> materialSemFornecedorResponseList.add(MaterialMapper.toResponseSemFornecedor(material)));

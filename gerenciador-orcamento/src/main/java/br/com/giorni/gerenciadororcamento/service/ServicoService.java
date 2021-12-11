@@ -48,7 +48,7 @@ public class ServicoService {
     private MaterialServicoService materialServicoService;
 
     public boolean save(ServicoDTO servicoDTO) {
-        var servico = ServicoMapper.toEntity(servicoDTO);
+        Servico servico = ServicoMapper.toEntity(servicoDTO);
         for (Auxiliar auxiliar:
              servico.getAuxiliares()) {
             auxiliar.setDisponibilidade(false);
@@ -131,9 +131,9 @@ public class ServicoService {
     public Double calcularValorTotalServico(Long id){
         Optional<Servico> servico = servicoRepository.findById(id);
         List<Double> valorTotalMateriaisList = new ArrayList<>();
-        var valorTotalMateriais = 0.0;
+        double valorTotalMateriais = 0.0;
         servico.get().getMateriais().forEach(materialServico -> {
-            var valorTotalMaterial = materialServico.getMaterial().getPreco() * materialServico.getQuantidadeMaterial();
+            double valorTotalMaterial = materialServico.getMaterial().getPreco() * materialServico.getQuantidadeMaterial();
             valorTotalMateriaisList.add(valorTotalMaterial);
         });
         for (Double valor : valorTotalMateriaisList) {
