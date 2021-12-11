@@ -20,7 +20,7 @@ public class OrcamentoMapper {
     public static Orcamento toEntity(OrcamentoDTO orcamentoDTO) {
        List<Servico> servicos = new ArrayList<>();
        if (orcamentoDTO.getServicos() != null){
-           servicos = ServicoMapper.listServicoDtoToListServico(orcamentoDTO.getServicos());
+           ServicoMapper.listServicoDtoToListServico(orcamentoDTO.getServicos());
        }
         return Orcamento
                 .builder()

@@ -5,7 +5,6 @@ import br.com.giorni.gerenciadororcamento.repository.ClienteRepository;
 import br.com.giorni.gerenciadororcamento.repository.EnderecoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.ClienteDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.ClienteMapper;
-import br.com.giorni.gerenciadororcamento.service.response.ClienteSemOrcamentoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +29,10 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public List<ClienteSemOrcamentoResponse> findAll(){
+    public List<ClienteDTO> findAll(){
         List<Cliente> clienteList = clienteRepository.findAll();
         return clienteList.stream()
-                .map(ClienteMapper::toResponseSemOrcamento)
+                .map(ClienteMapper::toDto)
                 .collect(Collectors.toList());
     }
 

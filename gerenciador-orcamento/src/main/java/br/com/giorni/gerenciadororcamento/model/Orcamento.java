@@ -23,7 +23,7 @@ public class Orcamento {
     private String observacoes;
     @Column(name = "valor_total")
     private Double valorTotal;
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany
     @JoinTable(name = "tb_servico_orcamento",
             joinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"))

@@ -17,7 +17,9 @@ import java.util.List;
 public class OrcamentoResponse {
     private Long id;
     private String observacoes;
-    @JsonProperty("valor_total")
+    @JsonProperty("taxa_auxiliar")
+    private Double taxaAuxiliar;
+    @JsonProperty("valor-total")
     private Double valorTotal;
     private List<ServicoResponse> servicos;
     private ClienteSemOrcamentoResponse cliente;

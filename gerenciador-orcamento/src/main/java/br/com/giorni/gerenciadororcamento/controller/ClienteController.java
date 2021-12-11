@@ -3,7 +3,6 @@ package br.com.giorni.gerenciadororcamento.controller;
 import br.com.giorni.gerenciadororcamento.model.Cliente;
 import br.com.giorni.gerenciadororcamento.service.ClienteService;
 import br.com.giorni.gerenciadororcamento.service.dto.ClienteDTO;
-import br.com.giorni.gerenciadororcamento.service.response.ClienteSemOrcamentoResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<ClienteSemOrcamentoResponse> findAll() {
+    public List<ClienteDTO> findAll() {
         return clienteService.findAll();
     }
 
