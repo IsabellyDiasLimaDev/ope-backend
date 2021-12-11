@@ -37,11 +37,10 @@ public class OrcamentoService {
         try {
             Orcamento orcamento = OrcamentoMapper.toEntity(orcamentoDTO);
             orcamento = orcamentoRepository.save(orcamento);
-            for (Servico servico :
-                    orcamento.getServicos()) {
-                log.error("{}", servico.getMateriais());
-                servico.adicionarOrcamento(orcamento);
+            for (Servico servico : orcamento.getServicos()) {
+                orcamento.adicionarServico(servico);
                 servicoRepository.save(servico);
+                orcamento = orcamentoRepository.save(orcamento);
             }
             return true;
         }catch (Exception e){
