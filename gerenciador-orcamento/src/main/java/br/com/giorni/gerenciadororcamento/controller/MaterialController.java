@@ -25,7 +25,7 @@ public class MaterialController {
 
 
     @PostMapping
-    public Material create(@RequestBody MaterialDTO materialDTO){
+    public Boolean create(@RequestBody MaterialDTO materialDTO){
         return materialService.save(materialDTO);
     }
 

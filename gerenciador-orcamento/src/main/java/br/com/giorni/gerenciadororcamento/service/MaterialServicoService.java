@@ -20,19 +20,4 @@ public class MaterialServicoService {
         return materialServico;
     }
 
-    public Servico calcularValorTotalServico(Servico servico){
-        List<Double> valorTotalMateriaisList = new ArrayList<>();
-        var valorTotalMateriais = 0.0;
-        servico.getMateriais().forEach(materialServico -> {
-            var valorTotalMaterial = materialServico.getMaterial().getPreco() * materialServico.getQuantidadeMaterial();
-            valorTotalMateriaisList.add(valorTotalMaterial);
-        });
-        for (Double valor : valorTotalMateriaisList) {
-            valorTotalMateriais += valor;
-        }
-        var valorTotalServico = valorTotalMateriais + servico.getValorMaoDeObra();
-        servico.setValorTotal(valorTotalServico);
-        return servico;
-    }
-
 }

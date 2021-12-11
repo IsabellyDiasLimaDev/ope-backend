@@ -18,9 +18,31 @@ public class ClienteMapper {
 
     public static Cliente toEntity(ClienteDTO clienteDTO){
         List<Orcamento> orcamentos = new ArrayList<>();
-        if (clienteDTO.getOrcamentos() != null){
+        if (clienteDTO.getOrcamentos() != null) {
             orcamentos = OrcamentoMapper.listOrcamentoDtoToListOrcamento(clienteDTO.getOrcamentos());
+
+            return Cliente
+                    .builder()
+                    .id(clienteDTO.getId())
+                    .email(clienteDTO.getEmail())
+                    .nome(clienteDTO.getNome())
+                    .telefone(clienteDTO.getTelefone())
+                    .cpfCnpj(clienteDTO.getCpfCnpj())
+                    .tipoCliente(clienteDTO.getTipoCliente())
+                    .endereco(Endereco
+                            .builder()
+                            .numero(clienteDTO.getEndereco().getNumero())
+                            .logradouro(clienteDTO.getEndereco().getLogradouro())
+                            .bairro(clienteDTO.getEndereco().getBairro())
+                            .cep(clienteDTO.getEndereco().getCep())
+                            .cidade(clienteDTO.getEndereco().getCidade())
+                            .estado(clienteDTO.getEndereco().getEstado())
+                            .id(clienteDTO.getEndereco().getId())
+                            .build())
+                    .orcamentos(orcamentos)
+                    .build();
         }
+
         return Cliente
                 .builder()
                 .id(clienteDTO.getId())
@@ -39,7 +61,6 @@ public class ClienteMapper {
                         .estado(clienteDTO.getEndereco().getEstado())
                         .id(clienteDTO.getEndereco().getId())
                         .build())
-                .orcamentos(orcamentos)
                 .build();
     }
 
@@ -59,6 +80,7 @@ public class ClienteMapper {
                 .orcamentos(orcamentos)
                 .endereco(EnderecoDTO
                         .builder()
+                        .numero(cliente.getEndereco().getNumero())
                         .bairro(cliente.getEndereco().getBairro())
                         .cep(cliente.getEndereco().getCep())
                         .cidade(cliente.getEndereco().getCidade())

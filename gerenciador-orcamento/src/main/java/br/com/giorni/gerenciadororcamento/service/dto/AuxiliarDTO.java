@@ -17,7 +17,7 @@ public class AuxiliarDTO {
     String nome;
     @JsonProperty("tipo_servico")
     String tipoServico;
-    boolean disponbibilidade;
+    boolean disponibilidade;
     String email;
     @JsonIgnore
     List<ServicoDTO> servicos;

@@ -9,13 +9,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Value
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor(onConstructor_={@Default})
 public class ServicoSemMaterialDTO {
 
@@ -28,12 +29,12 @@ public class ServicoSemMaterialDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonProperty("dt_inicial")
+    @JsonProperty("data_inicial")
     private LocalDate dtInicial;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonProperty("dt_final")
+    @JsonProperty("data_final")
     private LocalDate dtFinal;
     private List<AuxiliarDTO> auxiliares;
 }

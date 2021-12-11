@@ -3,7 +3,9 @@ package br.com.giorni.gerenciadororcamento.service;
 import br.com.giorni.gerenciadororcamento.model.Orcamento;
 import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.repository.OrcamentoRepository;
+import br.com.giorni.gerenciadororcamento.repository.ServicoRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.OrcamentoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.mapper.AuxiliarMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialServicoMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.OrcamentoMapper;
@@ -12,6 +14,7 @@ import br.com.giorni.gerenciadororcamento.service.response.AuxiliarSemServicoRes
 import br.com.giorni.gerenciadororcamento.service.response.MaterialServicoSemServicoResponse;
 import br.com.giorni.gerenciadororcamento.service.response.OrcamentoResponse;
 import br.com.giorni.gerenciadororcamento.service.response.ServicoResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +23,35 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class OrcamentoService {
 
     @Autowired
     private OrcamentoRepository orcamentoRepository;
 
-    public Orcamento save(OrcamentoDTO orcamentoDTO) {
-        Orcamento orcamento = OrcamentoMapper.toEntity(orcamentoDTO);
-        return orcamentoRepository.save(orcamento);
+    @Autowired
+    private ServicoRepository servicoRepository;
+
+    public boolean save(OrcamentoDTO orcamentoDTO) {
+        try {
+            System.out.println(orcamentoDTO.getServicos());
+            Orcamento orcamento = OrcamentoMapper.toEntity(orcamentoDTO);
+            System.out.println(orcamento.getServicos());
+            for (Servico servico :
+                    orcamento.getServicos()) {
+                orcamento.adicionarServico(servico);
+                var servico2 = servicoRepository.save(servico);
+                orcamento = orcamentoRepository.save(orcamento);
+                System.out.println(servico2.getOrcamentos());
+                System.out.println(orcamento.getServicos());
+            }
+
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+         return false;
+        }
     }
 
     public List<OrcamentoResponse> findAll() {
@@ -112,15 +135,5 @@ public class OrcamentoService {
             return true;
         }
         return false;
-    }
-
-    public Orcamento calcularValorTotalOrcamento(Orcamento orcamento) {
-        var valorTotalServicos = 0.0;
-        for (Servico servico : orcamento.getServicos()) {
-            valorTotalServicos += servico.getValorTotal();
-        }
-        valorTotalServicos += (valorTotalServicos * orcamento.getTaxaAuxiliar());
-        orcamento.setValorTotal(valorTotalServicos);
-        return orcamento;
     }
 }

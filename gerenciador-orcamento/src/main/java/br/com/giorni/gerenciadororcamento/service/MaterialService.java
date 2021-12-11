@@ -1,7 +1,9 @@
 package br.com.giorni.gerenciadororcamento.service;
 
 import br.com.giorni.gerenciadororcamento.model.Auxiliar;
+import br.com.giorni.gerenciadororcamento.model.Fornecedor;
 import br.com.giorni.gerenciadororcamento.model.Material;
+import br.com.giorni.gerenciadororcamento.repository.FornecedorRepository;
 import br.com.giorni.gerenciadororcamento.repository.MaterialRepository;
 import br.com.giorni.gerenciadororcamento.service.dto.AuxiliarDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialDTO;
@@ -10,6 +12,7 @@ import br.com.giorni.gerenciadororcamento.service.mapper.FornecedorMapper;
 import br.com.giorni.gerenciadororcamento.service.mapper.MaterialMapper;
 import br.com.giorni.gerenciadororcamento.service.response.FornecedorSemMaterialResponse;
 import br.com.giorni.gerenciadororcamento.service.response.MaterialResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,40 +21,48 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class MaterialService {
 
     @Autowired
     private MaterialRepository materialRepository;
 
-    public Material save(MaterialDTO materialDTO){
+    @Autowired
+    private FornecedorRepository fornecedorRepository;
+
+    public Boolean save(MaterialDTO materialDTO) {
         Material material = MaterialMapper.toEntity(materialDTO);
-        return materialRepository.save(material);
+        material = materialRepository.save(material);
+        for (Fornecedor fornecedor :
+                material.getFornecedores()) {
+            fornecedor.adicionarMaterial(material);
+            fornecedorRepository.save(fornecedor);
+        }
+        return true;
     }
 
 
-    public List<MaterialResponse> findAll(){
+    public List<MaterialResponse> findAll() {
         List<Material> materiais = materialRepository.findAll();
         List<MaterialResponse> materialResponse = new ArrayList<>();
         materiais.forEach(material -> {
-            if (material.getFornecedores().size() > 0){
+            if (material.getFornecedores().size() > 0) {
                 List<FornecedorSemMaterialResponse> fornecedorSemMaterialResponseList = new ArrayList<>();
-                        material.getFornecedores().forEach(fornecedor -> fornecedorSemMaterialResponseList.add(FornecedorMapper.toResponseSemMaterial(fornecedor)));
+                material.getFornecedores().forEach(fornecedor -> fornecedorSemMaterialResponseList.add(FornecedorMapper.toResponseSemMaterial(fornecedor)));
                 materialResponse.add(MaterialMapper.toResponse(material, fornecedorSemMaterialResponseList));
-            }
-            else
-            {
+            } else {
                 materialResponse.add(MaterialMapper.toResponse(material, new ArrayList<>()));
             }
         });
         return materialResponse;
     }
 
-    public Optional<MaterialResponse> findById(Long id){
+    public Optional<MaterialResponse> findById(Long id) {
         Optional<Material> materialOptional = materialRepository.findById(id);
         List<FornecedorSemMaterialResponse> fornecedores = new ArrayList<>();
-        if (materialOptional.isPresent()){
+        if (materialOptional.isPresent()) {
             Material material = materialOptional.get();
-            if (material.getFornecedores().size() > 0){
+            if (material.getFornecedores().size() > 0) {
                 material.getFornecedores().forEach(fornecedor -> fornecedores.add(FornecedorMapper.toResponseSemMaterial(fornecedor)));
             }
             MaterialResponse materialResponse = MaterialMapper.toResponse(material, fornecedores);
@@ -60,11 +71,11 @@ public class MaterialService {
         return Optional.empty();
     }
 
-    public MaterialResponse update(MaterialDTO materialDTO){
+    public MaterialResponse update(MaterialDTO materialDTO) {
         Material material = MaterialMapper.toEntity(materialDTO);
         material = materialRepository.save(material);
         List<FornecedorSemMaterialResponse> fornecedorSemMaterialResponseList = new ArrayList<>();
-        if (material.getFornecedores().size() > 0){
+        if (material.getFornecedores().size() > 0) {
             material.getFornecedores().forEach(fornecedor -> fornecedorSemMaterialResponseList.add(FornecedorMapper.toResponseSemMaterial(fornecedor)));
 
         }

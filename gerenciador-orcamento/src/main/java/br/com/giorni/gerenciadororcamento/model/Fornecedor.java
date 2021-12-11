@@ -25,11 +25,23 @@ public class Fornecedor {
     private String nome;
     private String email;
     private String telefone;
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name="tb_fornecedor_material",
-            joinColumns = @JoinColumn(name="fornecedor_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name="material_id", referencedColumnName = "id")
-    )
+    @ManyToMany(mappedBy = "fornecedores")
     private List<Material> materiais;
+
+    public void adicionarMaterial(Material material) {
+        if(material != null && !getMateriais().contains(material)) {
+            getMateriais().add(material);
+
+            if(!material.getFornecedores().contains(this)) {
+                material.getFornecedores().add(this);
+            }
+        }
+    }
+
+    public List<Material> getMateriais() {
+        if(materiais == null) {
+            materiais = new ArrayList<>();
+        }
+        return materiais;
+    }
 }

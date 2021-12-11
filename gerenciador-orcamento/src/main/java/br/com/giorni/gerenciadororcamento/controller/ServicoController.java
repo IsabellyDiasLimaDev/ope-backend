@@ -5,6 +5,7 @@ import br.com.giorni.gerenciadororcamento.model.Servico;
 import br.com.giorni.gerenciadororcamento.service.ServicoService;
 import br.com.giorni.gerenciadororcamento.service.dto.MaterialServicoDTO;
 import br.com.giorni.gerenciadororcamento.service.dto.ServicoDTO;
+import br.com.giorni.gerenciadororcamento.service.dto.ServicoSemMaterialDTO;
 import br.com.giorni.gerenciadororcamento.service.response.ServicoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,18 @@ public class ServicoController {
     private ServicoService servicoService;
 
     @PostMapping
-    public MaterialServico createServiceWithMaterial(@RequestBody MaterialServicoDTO materialServicoDTO){
-        return servicoService.save(materialServicoDTO);
+    public boolean createServiceWithMaterial(@RequestBody ServicoDTO servicoDTO){
+        return servicoService.save(servicoDTO);
     }
 
     @GetMapping
     public ResponseEntity<List<ServicoResponse>> findAll(){
         return ResponseEntity.ok().body(servicoService.findAll());
+    }
+
+    @GetMapping(path = "/semmaterial")
+    public ResponseEntity<List<ServicoSemMaterialDTO>> findAllWithoutMaterial(){
+        return ResponseEntity.ok().body(servicoService.findAllWithoutMaterial());
     }
 
     @GetMapping(path = {"/{id}"})
@@ -47,5 +53,10 @@ public class ServicoController {
     public ResponseEntity<?> delete(@PathVariable Long id){
         boolean deletou = servicoService.delete(id);
         return deletou ? ResponseEntity.ok().body("Serviço removido com sucesso") : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping(path = "/calcularValorTotalServico/{id}")
+    public Double calcularValorTotalServico(@PathVariable Long id){
+        return servicoService.calcularValorTotalServico(id);
     }
 }

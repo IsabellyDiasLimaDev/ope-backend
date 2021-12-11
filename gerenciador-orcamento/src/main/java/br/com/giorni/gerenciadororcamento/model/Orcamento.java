@@ -21,16 +21,31 @@ public class Orcamento {
     @Column(name = "id", nullable = false)
     private Long id;
     private String observacoes;
-    @Column(name = "taxa_auxiliar")
-    private Double taxaAuxiliar;
     @Column(name = "valor_total")
     private Double valorTotal;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "tb_servico_orcamento",
             joinColumns = @JoinColumn(name = "orcamento_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"))
     private List<Servico> servicos;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
+
+    public List<Servico> getServicos() {
+        if(servicos == null) {
+            servicos = new ArrayList<>();
+        }
+        return servicos;
+    }
+
+    public void adicionarServico(Servico servico) {
+        if(servico != null && !getServicos().contains(servico)) {
+            getServicos().add(servico);
+
+            if(!servico.getOrcamentos().contains(this)) {
+                servico.getOrcamentos().add(this);
+            }
+        }
+    }
 }

@@ -22,7 +22,7 @@ public class OrcamentoController {
     private OrcamentoService orcamentoService;
 
     @PostMapping
-    public Orcamento save(@RequestBody OrcamentoDTO orcamentoDTO) {
+    public boolean save(@RequestBody OrcamentoDTO orcamentoDTO) {
         return orcamentoService.save(orcamentoDTO);
     }
 
@@ -47,6 +47,6 @@ public class OrcamentoController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         boolean deletou = orcamentoService.delete(id);
         return deletou ? ResponseEntity.ok().body("Orcamento removido com sucesso") : ResponseEntity.notFound().build();
-
     }
+
 }

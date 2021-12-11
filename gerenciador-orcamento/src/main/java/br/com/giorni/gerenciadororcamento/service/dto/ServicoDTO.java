@@ -28,13 +28,14 @@ public class ServicoDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonProperty("dt_inicial")
+    @JsonProperty("data_inicial")
     LocalDate dtInicial;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonProperty("dt_final")
+    @JsonProperty("data_final")
     LocalDate dtFinal;
+    @JsonProperty("material_servico")
     List<MaterialServicoDTO> materiais;
     List<AuxiliarDTO> auxiliares;
     List<OrcamentoDTO> orcamentos;

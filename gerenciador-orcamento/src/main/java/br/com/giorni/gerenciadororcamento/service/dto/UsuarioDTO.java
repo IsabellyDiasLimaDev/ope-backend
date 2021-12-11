@@ -2,14 +2,15 @@ package br.com.giorni.gerenciadororcamento.service.dto;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Value;
 
 @Value
+@Builder
 @AllArgsConstructor(onConstructor_={@Default})
 public class UsuarioDTO {
 
-    private Long id;
-    private String login;
-    private String email;
-    private String senha;
+    Long id;
+    String login;
+    String senha;
 }

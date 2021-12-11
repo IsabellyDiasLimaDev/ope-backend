@@ -16,6 +16,6 @@ public class AuxiliarSemServicoResponse {
     private String nome;
     @JsonProperty("tipo_servico")
     private String tipoServico;
-    private boolean disponbibilidade;
+    private boolean disponibilidade;
     private String email;
 }

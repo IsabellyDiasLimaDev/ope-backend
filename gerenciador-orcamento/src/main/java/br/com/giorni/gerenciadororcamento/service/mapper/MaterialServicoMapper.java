@@ -13,9 +13,17 @@ import java.util.stream.Collectors;
 public class MaterialServicoMapper {
 
     public static MaterialServico toEntity(MaterialServicoDTO materialServicoDTO){
+        if (materialServicoDTO.getServico() != null){
+            return MaterialServico
+                    .builder()
+                    .servico(ServicoMapper.toEntity(materialServicoDTO.getServico()))
+                    .id(materialServicoDTO.getId())
+                    .quantidadeMaterial(materialServicoDTO.getQuantidadeMaterial())
+                    .material(MaterialMapper.toEntity(materialServicoDTO.getMaterial()))
+                    .build();
+        }
         return MaterialServico
                 .builder()
-                .servico(ServicoMapper.toEntity(materialServicoDTO.getServico()))
                 .id(materialServicoDTO.getId())
                 .quantidadeMaterial(materialServicoDTO.getQuantidadeMaterial())
                 .material(MaterialMapper.toEntity(materialServicoDTO.getMaterial()))

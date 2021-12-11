@@ -22,7 +22,7 @@ public class AuxiliarMapper {
                     .telefone(auxiliarDTO.getTelefone())
                     .nome(auxiliarDTO.getNome())
                     .tipoServico(auxiliarDTO.getTipoServico())
-                    .disponbibilidade(auxiliarDTO.isDisponbibilidade())
+                    .disponibilidade(auxiliarDTO.isDisponibilidade())
                     .email(auxiliarDTO.getEmail())
                     .servicos(servicos)
                     .build();
@@ -33,7 +33,7 @@ public class AuxiliarMapper {
                 .telefone(auxiliarDTO.getTelefone())
                 .nome(auxiliarDTO.getNome())
                 .tipoServico(auxiliarDTO.getTipoServico())
-                .disponbibilidade(auxiliarDTO.isDisponbibilidade())
+                .disponibilidade(auxiliarDTO.isDisponibilidade())
                 .email(auxiliarDTO.getEmail())
                 .build();
     }
@@ -46,7 +46,7 @@ public class AuxiliarMapper {
                 .telefone(auxiliar.getTelefone())
                 .nome(auxiliar.getNome())
                 .tipoServico(auxiliar.getTipoServico())
-                .disponbibilidade(auxiliar.isDisponbibilidade())
+                .disponibilidade(auxiliar.isDisponibilidade())
                 .email(auxiliar.getEmail())
                 .build();
     }
@@ -68,7 +68,7 @@ public class AuxiliarMapper {
         return AuxiliarSemServicoResponse
                 .builder()
                 .id(auxiliar.getId())
-                .disponbibilidade(auxiliar.isDisponbibilidade())
+                .disponibilidade(auxiliar.isDisponibilidade())
                 .email(auxiliar.getEmail())
                 .nome(auxiliar.getNome())
                 .telefone(auxiliar.getTelefone())

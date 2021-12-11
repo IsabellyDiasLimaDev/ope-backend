@@ -36,4 +36,9 @@ public class MaterialServico {
         this.material = material;
         this.servico = servico;
     }
+    
+    public void AtualizarQuantidadeMaterial() {
+        this.material.setQuantidadeDisponivel(this.material.getQuantidadeDisponivel() - this.quantidadeMaterial);
+    }
+    
 }

@@ -20,7 +20,7 @@ public class OrcamentoMapper {
     public static Orcamento toEntity(OrcamentoDTO orcamentoDTO) {
        List<Servico> servicos = new ArrayList<>();
        if (orcamentoDTO.getServicos() != null){
-           ServicoMapper.listServicoDtoToListServico(orcamentoDTO.getServicos());
+           servicos = ServicoMapper.listServicoDtoToListServico(orcamentoDTO.getServicos());
        }
         return Orcamento
                 .builder()
@@ -28,7 +28,6 @@ public class OrcamentoMapper {
                 .observacoes(orcamentoDTO.getObservacoes())
                 .servicos(servicos)
                 .cliente(ClienteMapper.toEntity(orcamentoDTO.getCliente()))
-                .taxaAuxiliar(orcamentoDTO.getTaxaAuxiliar())
                 .valorTotal(orcamentoDTO.getValorTotal())
                 .build();
     }
@@ -61,7 +60,6 @@ public class OrcamentoMapper {
                 .cliente(ClienteMapper.toResponseSemOrcamento(orcamento.getCliente()))
                 .observacoes(orcamento.getObservacoes())
                 .servicos(servicoResponse)
-                .taxaAuxiliar(orcamento.getTaxaAuxiliar())
                 .valorTotal(orcamento.getValorTotal())
                 .build();
     }

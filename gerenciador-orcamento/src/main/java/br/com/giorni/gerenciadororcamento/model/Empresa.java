@@ -1,17 +1,15 @@
 package br.com.giorni.gerenciadororcamento.model;
 
-import br.com.giorni.gerenciadororcamento.service.dto.EmpresaDTO;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "tb_empresa")
 public class Empresa {
 
@@ -20,7 +18,7 @@ public class Empresa {
     private Long id;
     @Column(name = "nome_fantasia")
     private String nomeFantasia;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco endereco;
 
