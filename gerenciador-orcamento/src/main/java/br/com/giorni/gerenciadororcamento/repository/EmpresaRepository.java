@@ -1,7 +1,6 @@
 package br.com.giorni.gerenciadororcamento.repository;
 
 import br.com.giorni.gerenciadororcamento.model.Empresa;
-import br.com.giorni.gerenciadororcamento.model.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
